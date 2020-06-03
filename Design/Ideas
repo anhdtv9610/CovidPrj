@@ -1,0 +1,42 @@
+
+* Call API trên bộ Y tế:
+1. Tình trạng dịch:
+	+ Số ca mắc bệnh, tử vong, đã khỏi.
+	+ Vị trí cảnh báo nguy hiểm.
+=> Đưa ra thông báo cảnh báo khi tới gần khu vực nguy hiểm trong bán kính <= 10m.
+
+* Dựng server:
+2. Tạo user:
+	+ Thêm, sửa, xóa user: Đăng ký, Login, Logout
+	
+3. Khai báo y tế:
+	+ Tạo, sửa bản khai báo y tế (Không xóa).
+	+ Tìm kiếm:
+		- Theo QR (hiệu lực trong 5p).
+		- (*) Tìm kiếm theo SĐT, CMND hoặc user đăng nhập.
+4. Khai báo tình trạng sức khỏe hàng ngày:
+	+ 4 biểu hiện:...(hardcode) điền dưới dạng checkbox.
+	+ 0/4 => trả về thông báo khỏe mạnh(M0).
+	+ 1,2/4 => trả về thông báo: cảnh báo sức khỏe mức 1 (M1).
+	+ 3,4/4 => trả về thông báo: cảnh báo sức khỏe báo động(M2).
+	+ Thông báo (M0, M1, M2) là dữ liệu được lưu vào 1 trường trong DB.
+	+ Lưu updateDate.
+	+ Note: (Chọn 1 trong 2 cách lưu dữ liệu)
+		- Khai báo sức khỏe hàng ngày: chỉ thêm, không sửa, không xóa.
+		- (*) Khai báo sức khỏe hàng ngày: Default: 0/4 (M0) khi tạo user và chỉ sửa ko xóa.
+
+x. Đăng ký cách ly: 
+	+ Đang suy nghĩ xem có cần thiết hay không.
+	+ Nếu làm thì call API bộ Y tế luôn hay lưu thông tin trên server?
+	
+* Front-end:
+5. Định vị (Giãn cách xã hội):
+	+ Định vị giữa các user là bán kính <= 1m (trên 5s): cảnh báo.
+	+ Nếu làm được sẽ làm thêm:
+		- Các user có cảnh báo sức khỏe là M1(lấy ở bản ghi cuối cùng - dựa vào updateDate nếu lưu theo cách 1) sẽ có cảnh báo khi bán kính <= 1,5m.
+		- Các user có cảnh báo sức khỏe là M2(lấy ở bản ghi cuối cùng - dựa vào updateDate nếu lưu theo cách 1) sẽ có cảnh báo khi bán kính <= 2m.
+		
+6. Hướng dẫn phòng chống dịch:
+	+ Click vào link(thẻ <a>) để chuyển hướng tới link phòng dịch của bộ Y tế(search link trên mạng hoặc app ncovi).
+
+(*): Ưu tiên.

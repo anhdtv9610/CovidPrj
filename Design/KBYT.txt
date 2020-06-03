@@ -1,0 +1,18 @@
+-toContact_withPatient: bool (Có tiếp xúc vs ng nghi nhiễm k?)
+-backFromDiseaseArea: bool (Có về từ vùng dịch k?)
+-toContact_withPersonBack: bool (Có tiếp xúc vs ng về từ vùng dịch k?)
+-isFever: bool
+-isCough: bool
+-isDyspoenic: bool
+-isTired: bool
+-isSoreThoroat: đau họng
+-isPneumonia: sưng phổi
+-isLiverish: có bị bênh gan hay k?
+-isBlood: có bị bệnh về máu k?
+-isPulmonic : Có bị bệnh về phổi k?
+-isCardiopathy: có bị bệnh về tim k?
+-bloodPresure: huyết áp
+-HIV_immune: HIV và bệnh về huyết áp
+-isDiabetes: tiểu đường
+-isCancer: ung thư
+-isPregnant: có thai
