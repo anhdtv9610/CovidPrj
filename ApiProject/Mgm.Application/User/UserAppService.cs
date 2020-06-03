@@ -335,12 +335,14 @@ namespace Mgm.User
 
                 Utils utils = new Utils();
 
+                string passold = utils.MD5Hash(input.PasswordOld);
+
                 var user = await _usersRepository.GetAll()
                     .Where(x => x.Username.Equals(input.Username))
                     .FirstOrDefaultAsync();
 
                 var chckPass = await _usersRepository.GetAll()
-                    .Where(x => x.Password.Equals(utils.MD5Hash(input.PasswordOld)))
+                    .Where(x => x.Password.Equals(passold))
                     .FirstOrDefaultAsync();
 
                 if (user != null)

@@ -256,6 +256,7 @@
     <Compile Include="User\Dtos\CreateUserInput.cs" />
     <Compile Include="User\Dtos\FilterInput.cs" />
     <Compile Include="User\Dtos\UpdatePasswordInput.cs" />
+    <Compile Include="User\Dtos\UpdateTestHealthInput.cs" />
     <Compile Include="User\Dtos\UsersOutput.cs" />
     <Compile Include="User\Dtos\TestHealthOutput.cs" />
     <Compile Include="User\Dtos\UpdateUserInput.cs" />
