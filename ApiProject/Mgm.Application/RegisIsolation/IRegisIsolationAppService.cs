@@ -4,11 +4,11 @@ using Mgm.User.Dtos;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mgm.Utility.Dtos;
-using Mgm.Covid19.User;
+using Mgm.MgmSys.MgmUser;
 
-namespace Mgm.User
+namespace Mgm.RegisIsolation
 {
-    public interface IUserAppService : IApplicationService
+    public interface IRegisIsolationAppService : IApplicationService
     {
         [HttpPost]
         PageResultDto<UsersOutput> GetUserList(FilterInput input);

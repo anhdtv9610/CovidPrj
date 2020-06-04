@@ -8,8 +8,6 @@ using Abp.Collections.Extensions;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.UI;
-using Mgm.Covid19.User;
-using Mgm.Covid19.TestHealth;
 using Mgm.Covid19.Mst_Province;
 using Mgm.Covid19.Mst_District;
 using Mgm.Address.Dtos;
@@ -21,7 +19,6 @@ namespace Mgm.Address
 {
     public class AddressAppService : MgmAppServiceBase, IAddressAppService
     {
-        public const string PasswordRegex = "(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s)[0-9a-zA-Z!@#$%^&*()]*$";
 
         private readonly IRepository<Mst_Province> _provinceRepository;
         private readonly IRepository<Mst_District> _districtRepository;
