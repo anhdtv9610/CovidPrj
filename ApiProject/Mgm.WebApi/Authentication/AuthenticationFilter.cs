@@ -22,7 +22,10 @@ namespace Mgm.Authentication
             var authorization = request.Headers.Authorization;
             var path = request.RequestUri.LocalPath;
             
-            if (path != "/api/services/app/auth/checkLogin" && path!= "/api/services/app/user/createUser")
+            if (path.ToLower() != "/api/services/app/auth/checklogin" &&
+                path.ToLower() != "/api/services/app/user/createuser" &&
+                path.ToLower() != "/api/services/app/address/getprovincelist" &&
+                path.ToLower() != "/api/services/app/address/getdistrictlist")
             {
                 if (authorization == null)
                 {

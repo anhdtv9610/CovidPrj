@@ -15,7 +15,7 @@ namespace Mgm.EntityFramework.Covid19
         public virtual IDbSet<Users> Users { get; set; }
         public virtual IDbSet<UserGroup> UserGroup { get; set; }
         public virtual IDbSet<TestHealth> TestHealth { get; set; }
-        public virtual IDbSet<RegisIsolation> RegisIsolation { get; set; }
+        public virtual IDbSet<RegisIsolations> RegisIsolations { get; set; }
         public virtual IDbSet<KBYT> KBYT { get; set; }
         public virtual IDbSet<Mst_District> Mst_District { get; set; }
         public virtual IDbSet<Mst_Province> Mst_Province { get; set; }

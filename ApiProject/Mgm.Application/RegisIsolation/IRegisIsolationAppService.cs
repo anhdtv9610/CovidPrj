@@ -1,6 +1,6 @@
 ﻿using Abp.Application.Services;
 using System.Web.Http;
-using Mgm.User.Dtos;
+using Mgm.RegisIsolation.Dtos;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mgm.Utility.Dtos;
@@ -11,27 +11,27 @@ namespace Mgm.RegisIsolation
     public interface IRegisIsolationAppService : IApplicationService
     {
         [HttpPost]
-        PageResultDto<UsersOutput> GetUserList(FilterInput input);
+        PageResultDto<RegisIsolationOutput> GetRegisIsolationsList(FilterInput input);
 
         [HttpGet]
-        UsersOutput GetUserDetail(string username);
+        RegisIsolationOutput GetRegisIsolationDetail(string username);
 
-        [HttpPost]
-        Task<ResultDto> UpdateUser(UpdateUserInput input);
+        //[HttpPost]
+        //Task<ResultDto> UpdateUser(UpdateUserInput input);
 
-        [HttpPost]
-        Task<ResultDto> CreateUser(CreateUserInput input);
+        //[HttpPost]
+        //Task<ResultDto> CreateUser(CreateUserInput input);
 
-        [HttpGet]
-        Task<ResultDto> DeleteUser(string username);
+        //[HttpGet]
+        //Task<ResultDto> DeleteUser(string username);
 
-        [HttpPost]
-        Task<ResultDto> UpdatePassword(UpdatePasswordInput input);
+        //[HttpPost]
+        //Task<ResultDto> UpdatePassword(UpdatePasswordInput input);
 
-        [HttpGet]
-        TestHealthOutput GetTestHealth(string username);
+        //[HttpGet]
+        //TestHealthOutput GetTestHealth(string username);
 
-        [HttpPost]
-        Task<ResultDto> UpdateTestHealth(UpdateTestHealthInput input);
+        //[HttpPost]
+        //Task<ResultDto> UpdateTestHealth(UpdateTestHealthInput input);
     }
 }
