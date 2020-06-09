@@ -197,12 +197,12 @@ namespace Mgm.User
             {
                 if (!new Regex(PasswordRegex).IsMatch(input.Password))
                 {
-                    throw new UserFriendlyException(400, L("InvalidPasswordFormat"));
+                    throw new UserFriendlyException(200, L("InvalidPasswordFormat"));
                 }
 
                 if (!input.Password.Equals(input.ConfirmPassword))
                 {
-                    throw new UserFriendlyException(400, L("TwoPasswordsThatYouEnterIsInconsistent"));
+                    throw new UserFriendlyException(200, L("TwoPasswordsThatYouEnterIsInconsistent"));
                 }
 
                 var culture = CultureInfo.InvariantCulture;
@@ -246,7 +246,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("UserOrCMNDExisted"));
+                    throw new UserFriendlyException(200, L("UserOrCMNDExisted"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -291,7 +291,7 @@ namespace Mgm.User
                     }
                     else
                     {
-                        throw new UserFriendlyException(404, L("TheCMNDInputAlreadyExist"));
+                        throw new UserFriendlyException(200, L("TheCMNDInputAlreadyExist"));
                     }
                     user.FullName = input.FullName;
                     user.BirthDay = birthDate;
@@ -306,7 +306,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("UserNotFound"));
+                    throw new UserFriendlyException(200, L("UserNotFound"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -451,7 +451,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("UserNotFound"));
+                    throw new UserFriendlyException(200, L("UserNotFound"));
                 }
 
                 ResultDto result = new ResultDto();

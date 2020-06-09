@@ -36,12 +36,12 @@ namespace Mgm.Authentication
                 Utils utils = new Utils();
                 if (user == null || !user.Password.Equals(utils.MD5Hash(input.Password)))
                 {
-                    throw new UserFriendlyException(400, L("TheUsernameOrPasswordInvalid"));
+                    throw new UserFriendlyException(200, L("TheUsernameOrPasswordInvalid"));
                 }
 
                 if (user.IsActive != 1)
                 {
-                    throw new UserFriendlyException(400, L("YourAccountHasBeenTemporarilyLocked"));
+                    throw new UserFriendlyException(200, L("YourAccountHasBeenTemporarilyLocked"));
                 }
 
                 LoginOutput result = new LoginOutput();

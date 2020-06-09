@@ -268,4 +268,10 @@ namespace Mgm.Utility
             return false;
         }
     }
+
+    public class Flag
+    {
+        public const string CANCEL = "-1";
+        public const string APPROVED = "1";
+    }
 }
