@@ -96,7 +96,15 @@ namespace Mgm.RegisIsolation
                         t1.CancelDate
                     })
                     .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
-                        obj => obj.Username.Contains(input.Keyword))
+                        obj => obj.Username.Contains(input.Keyword)
+                        || obj.ProvinceName.ToUpper().Contains(input.Keyword.ToUpper())
+                        || obj.DistrictName.ToUpper().Contains(input.Keyword.ToUpper()))
+                    .WhereIf(input.RegisIsolationStatus != 00,
+                        obj => obj.RegisIsolationStatus == input.RegisIsolationStatus)
+                    .WhereIf(input.CancelIsolationStatus != 00,
+                        obj => obj.CancelIsolationStatus == input.CancelIsolationStatus)
+                    .WhereIf(input.FinishIsolationStatus != 00,
+                        obj => obj.FinishIsolationStatus == input.FinishIsolationStatus)
                     .Select(x => new RegisIsolationOutput()
                     {
                         Username = x.Username,
@@ -218,7 +226,8 @@ namespace Mgm.RegisIsolation
             try
             {
                 var chckUser = await _regisIsolationsRepository.GetAll()
-                    .Where(x => x.Username.Equals(input.Username) && (x.RegisIsolationStatus == 1 || (x.RegisIsolationStatus == 0 && (x.CancelIsolationStatus == 1 || x.FinishIsolationStatus == 1))))
+                    .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && (x.CancelIsolationStatus == CancelIso.WAIT || (x.CancelIsolationStatus == CancelIso.APPROVED && x.FinishIsolationStatus == Flag.InActive)))
+                    //.OrderByDescending(x => x.Id)
                     .ToListAsync();
 
                 if (chckUser.Count == 0)
@@ -229,12 +238,12 @@ namespace Mgm.RegisIsolation
                         ProvinceCode = input.ProvinceCode,
                         DistrictCode = input.DistrictCode,
                         RegisAddress = input.RegisAddress,
-                        RegisIsolationStatus = 1,
+                        RegisIsolationStatus = Flag.Active,
                         RegisDate = DateTime.UtcNow,
-                        FinishIsolationStatus = 0,
+                        FinishIsolationStatus = Flag.InActive,
                         FinishDate = null,
-                        CancelIsolationStatus = 0,
-                        CancelDate = null
+                        CancelIsolationStatus = CancelIso.WAIT,
+                        CancelDate = DateTime.UtcNow
                     });
                 }
                 else
@@ -252,18 +261,18 @@ namespace Mgm.RegisIsolation
             }
         }
 
-        public async Task<ResultDto> UpdateFinishIsolation(CreateRegisIsolationInput input)
+        public async Task<ResultDto> UpdateFinishIsolation(FinishIsolationInput input)
         {
             try
             {
                 var finish = await _regisIsolationsRepository.GetAll()
-                    .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == 1 && x.FinishIsolationStatus == 0 && x.CancelIsolationStatus == 0)
-                    .OrderByDescending(x => x.Id)
+                    .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.APPROVED)
+                    //.OrderByDescending(x => x.Id)
                     .FirstOrDefaultAsync();
 
                 if (finish != null)
                 {
-                    finish.FinishIsolationStatus = 1;
+                    finish.FinishIsolationStatus = input.FinishIsolationStatus;
                     finish.FinishDate = DateTime.UtcNow;
 
                     await _regisIsolationsRepository.UpdateAsync(finish);
@@ -283,149 +292,35 @@ namespace Mgm.RegisIsolation
             }
         }
 
-        //public async Task<ResultDto> UpdatePassword(UpdatePasswordInput input)
-        //{
-        //    try
-        //    {
-        //        if (!string.IsNullOrEmpty(input.Password) && !new Regex(PasswordRegex).IsMatch(input.Password))
-        //        {
-        //            throw new UserFriendlyException(400, L("InvalidPasswordFormat"));
-        //        }
+        public async Task<ResultDto> UpdateApprovedIsolation(CancelIsolationInput input)
+        {
+            try
+            {
+                var approved = await _regisIsolationsRepository.GetAll()
+                    .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.WAIT)
+                    //.OrderByDescending(x => x.Id)
+                    .FirstOrDefaultAsync();
 
-        //        if (!string.IsNullOrEmpty(input.Password) && !input.Password.Equals(input.ConfirmPassword))
-        //        {
-        //            throw new UserFriendlyException(400, L("TwoPasswordsThatYouEnterIsInconsistent"));
-        //        }
+                if (approved != null)
+                {
+                    approved.CancelIsolationStatus = input.CancelIsolationStatus;
+                    approved.CancelDate = DateTime.UtcNow;
 
-        //        Utils utils = new Utils();
+                    await _regisIsolationsRepository.UpdateAsync(approved);
+                }
+                else
+                {
+                    throw new UserFriendlyException(400, L("UserNotFound"));
+                }
 
-        //        string passold = utils.MD5Hash(input.PasswordOld);
-
-        //        var user = await _usersRepository.GetAll()
-        //            .Where(x => x.Username.Equals(input.Username))
-        //            .FirstOrDefaultAsync();
-
-        //        var chckPass = await _usersRepository.GetAll()
-        //            .Where(x => x.Password.Equals(passold))
-        //            .FirstOrDefaultAsync();
-
-        //        if (user != null)
-        //        {
-        //            if (chckPass != null)
-        //            {
-        //                user.Password = utils.MD5Hash(input.Password);
-        //            }
-
-        //            user.UpdatedDate = DateTime.UtcNow;
-
-        //            await _usersRepository.UpdateAsync(user);
-        //        }
-        //        else
-        //        {
-        //            throw new UserFriendlyException(400, L("UserNotFound"));
-        //        }
-
-        //        ResultDto result = new ResultDto();
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
-
-        //public async Task<ResultDto> DeleteUser(string username)
-        //{
-        //    try
-        //    {
-        //        var user = await _usersRepository.GetAll()
-        //            .Where(x => x.Username.Equals(username))
-        //            .FirstOrDefaultAsync();
-
-        //        var testHealth = await _testHealthRepository.GetAll()
-        //            .Where(x => x.Username.Equals(username))
-        //            .FirstOrDefaultAsync();
-
-        //        if (user != null)
-        //        {
-        //            await _testHealthRepository.DeleteAsync(testHealth);
-        //            await _usersRepository.DeleteAsync(user);
-        //        }
-        //        else
-        //        {
-        //            throw new UserFriendlyException(400, L("UserNotPound"));
-        //        }
-
-        //        ResultDto result = new ResultDto();
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
-
-        //public TestHealthOutput GetTestHealth(string username)
-        //{
-        //    try
-        //    {
-        //        return _testHealthRepository.GetAll()
-        //            .Where(x => x.Username.Equals(username))
-        //            .ToList()
-        //            .Select(x => new TestHealthOutput()
-        //            {
-        //                Username = x.Username,
-        //                IsFever = x.IsFever,
-        //                IsCough = x.IsCough,
-        //                IsDyspnoeic = x.IsDyspnoeic,
-        //                IsTired = x.IsTired,
-        //                HealthStatus = x.HealthStatus,
-        //                HealthUpdDate = x.HealthUpdDate
-
-        //            })
-        //            .FirstOrDefault();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
-
-        //public async Task<ResultDto> UpdateTestHealth(UpdateTestHealthInput input)
-        //{
-        //    try
-        //    {
-        //        var testHealth = await _testHealthRepository.GetAll()
-        //            .Where(x => x.Username.Equals(input.Username))
-        //            .FirstOrDefaultAsync();
-
-        //        if (testHealth != null)
-        //        {
-        //            testHealth.IsFever = input.IsFever;
-        //            testHealth.IsCough = input.IsCough;
-        //            testHealth.IsDyspnoeic = input.IsDyspnoeic;
-        //            testHealth.IsTired = input.IsTired;
-        //            testHealth.HealthStatus = (input.IsFever + input.IsCough + input.IsDyspnoeic + input.IsTired);
-        //            testHealth.HealthUpdDate = DateTime.UtcNow;
-
-        //            await _testHealthRepository.UpdateAsync(testHealth);
-        //        }
-        //        else
-        //        {
-        //            throw new UserFriendlyException(400, L("UserNotFound"));
-        //        }
-
-        //        ResultDto result = new ResultDto();
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
+                ResultDto result = new ResultDto();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
     }
 }

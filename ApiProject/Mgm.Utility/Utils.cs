@@ -268,10 +268,25 @@ namespace Mgm.Utility
             return false;
         }
     }
-
     public class Flag
     {
-        public const string CANCEL = "-1";
-        public const string APPROVED = "1";
+        public const int Active = 1;
+        public const int InActive = 0;
+    }
+    public class CancelIso
+    {
+        public const int CANCEL = -1;
+        public const int WAIT = 0;
+        public const int APPROVED = 1;
+    }
+    public class FinishIso
+    {
+        public const int Active = 1;
+        public const int InActive = 0;
+    }
+    public class Sex
+    {
+        public const int NAM = 1;
+        public const int NU = 0;
     }
 }

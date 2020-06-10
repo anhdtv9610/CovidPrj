@@ -243,6 +243,10 @@
     <Compile Include="Authentication\Dtos\LoginInput.cs" />
     <Compile Include="Authentication\Dtos\LoginOutput.cs" />
     <Compile Include="Authentication\IAuthAppService.cs" />
+    <Compile Include="KBYT\Dtos\CreateKBYTInput.cs" />
+    <Compile Include="KBYT\Dtos\FilterInput.cs" />
+    <Compile Include="KBYT\IKBYTAppService.cs" />
+    <Compile Include="KBYT\KBYTAppService.cs" />
     <Compile Include="MgmApplicationModule.cs" />
     <Compile Include="MgmAppServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

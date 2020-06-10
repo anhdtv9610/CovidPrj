@@ -1,14 +1,11 @@
-﻿using Abp.Domain.Entities;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Abp.Application.Services.Dto;
+using System.ComponentModel.DataAnnotations;
 
-namespace Mgm.Covid19.KBYT
+namespace Mgm.KBYT.Dtos
 {
-    [Table("KBYT")]
-    public class KBYTCN : Entity
+    public class CreateKBYTInput : PagedResultRequestDto
     {
-        [Column("Id")]
-        public int Id { get; set; }
+        [Required]
         public string Username { get; set; }
         public bool ContactWithPatient { get; set; }
         public bool BackFromDiseaseArea { get; set; }
@@ -28,6 +25,5 @@ namespace Mgm.Covid19.KBYT
         public bool IsDiabetes { get; set; }
         public bool IsCancer { get; set; }
         public bool IsPregnant { get; set; }
-        public DateTime CreatedDate { get; set; }
     }
 }

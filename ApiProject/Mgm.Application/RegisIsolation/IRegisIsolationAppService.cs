@@ -16,22 +16,14 @@ namespace Mgm.RegisIsolation
         [HttpGet]
         RegisIsolationOutput GetRegisIsolationDetail(string username);
 
-        //[HttpPost]
-        //Task<ResultDto> UpdateUser(UpdateUserInput input);
+        [HttpPost]
+        Task<ResultDto> CreateRegisIsolation(CreateRegisIsolationInput input);
 
-        //[HttpPost]
-        //Task<ResultDto> CreateUser(CreateUserInput input);
+        [HttpPost]
+        Task<ResultDto> UpdateFinishIsolation(FinishIsolationInput input);
 
-        //[HttpGet]
-        //Task<ResultDto> DeleteUser(string username);
+        [HttpPost]
+        Task<ResultDto> UpdateApprovedIsolation(CancelIsolationInput input);
 
-        //[HttpPost]
-        //Task<ResultDto> UpdatePassword(UpdatePasswordInput input);
-
-        //[HttpGet]
-        //TestHealthOutput GetTestHealth(string username);
-
-        //[HttpPost]
-        //Task<ResultDto> UpdateTestHealth(UpdateTestHealthInput input);
     }
 }
