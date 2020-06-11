@@ -299,7 +299,7 @@ namespace Mgm.User
                     user.ProvinceCode = input.ProvinceCode;
                     user.DistrictCode = input.DistrictCode;
                     user.Address = input.Address;
-                    user.IsActive = input.IsActive;
+                    user.IsActive = Flag.Active;
                     user.UpdatedDate = DateTime.UtcNow;
 
                     await _usersRepository.UpdateAsync(user);
