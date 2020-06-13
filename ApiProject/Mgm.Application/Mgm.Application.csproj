@@ -266,6 +266,7 @@
     <Compile Include="UserGroup\UserGroupAppService.cs" />
     <Compile Include="User\Dtos\CreateUserInput.cs" />
     <Compile Include="User\Dtos\FilterInput.cs" />
+    <Compile Include="User\Dtos\RatingInput.cs" />
     <Compile Include="User\Dtos\UpdatePasswordInput.cs" />
     <Compile Include="User\Dtos\UpdateTestHealthInput.cs" />
     <Compile Include="User\Dtos\UsersOutput.cs" />

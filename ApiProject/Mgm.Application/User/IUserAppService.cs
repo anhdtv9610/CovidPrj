@@ -33,5 +33,13 @@ namespace Mgm.User
 
         [HttpPost]
         Task<ResultDto> UpdateTestHealth(UpdateTestHealthInput input);
+
+        [HttpPost]
+        Task<ResultDto> UpdateRating(RatingInput input);
+
+        [HttpPost]
+        Task<ResultDto> ApprovedAdmin(string username);
+        [HttpPost]
+        Task<ResultDto> CancelledAdmin(string username);
     }
 }

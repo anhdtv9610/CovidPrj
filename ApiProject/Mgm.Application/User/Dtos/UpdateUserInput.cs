@@ -22,5 +22,6 @@ namespace Mgm.User.Dtos
         [Required]
         public string Address { get; set; }
         public int IsActive { get; set; }
+        public int IsRegisAdmin { get; set; }
     }
 }

@@ -97,13 +97,14 @@ namespace Mgm.RegisIsolation
                     })
                     .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
                         obj => obj.Username.Contains(input.Keyword)
+                        || obj.FullName.ToUpper().Contains(input.Keyword.ToUpper())
                         || obj.ProvinceName.ToUpper().Contains(input.Keyword.ToUpper())
                         || obj.DistrictName.ToUpper().Contains(input.Keyword.ToUpper()))
-                    .WhereIf(input.RegisIsolationStatus != 00,
+                    .WhereIf(input.RegisIsolationStatus != 2,
                         obj => obj.RegisIsolationStatus == input.RegisIsolationStatus)
-                    .WhereIf(input.CancelIsolationStatus != 00,
+                    .WhereIf(input.CancelIsolationStatus != 2,
                         obj => obj.CancelIsolationStatus == input.CancelIsolationStatus)
-                    .WhereIf(input.FinishIsolationStatus != 00,
+                    .WhereIf(input.FinishIsolationStatus != 2,
                         obj => obj.FinishIsolationStatus == input.FinishIsolationStatus)
                     .Select(x => new RegisIsolationOutput()
                     {
@@ -127,8 +128,50 @@ namespace Mgm.RegisIsolation
                     .ToList();
 
                 objResult.totalCount = _regisIsolationsRepository.GetAll()
+                    .Join(_usersRepository.GetAll(), t1 => t1.Username, t2 => t2.Username,
+                    (t1, t2) => new
+                    {
+                        t1.Username,
+                        t2.FullName,
+                        t1.ProvinceCode,
+                        t1.DistrictCode,
+                        t1.RegisIsolationStatus,
+                        t1.FinishIsolationStatus,
+                        t1.CancelIsolationStatus
+                    })
+                    .Join(_districtRepository.GetAll(), t1 => t1.DistrictCode, t2 => t2.DistrictCode,
+                    (t1, t2) => new
+                    {
+                        t1.Username,
+                        t1.FullName,
+                        t1.ProvinceCode,
+                        t2.DistrictName,
+                        t1.RegisIsolationStatus,
+                        t1.FinishIsolationStatus,
+                        t1.CancelIsolationStatus
+                    })
+                    .Join(_provinceRepository.GetAll(), t1 => t1.ProvinceCode, t2 => t2.ProvinceCode,
+                    (t1, t2) => new
+                    {
+                        t1.Username,
+                        t1.FullName,
+                        t2.ProvinceName,
+                        t1.DistrictName,
+                        t1.RegisIsolationStatus,
+                        t1.FinishIsolationStatus,
+                        t1.CancelIsolationStatus
+                    })
                     .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
-                        obj => obj.Username.Contains(input.Keyword))
+                        obj => obj.Username.Contains(input.Keyword)
+                        || obj.FullName.ToUpper().Contains(input.Keyword.ToUpper())
+                        || obj.ProvinceName.ToUpper().Contains(input.Keyword.ToUpper())
+                        || obj.DistrictName.ToUpper().Contains(input.Keyword.ToUpper()))
+                    .WhereIf(input.RegisIsolationStatus != 2,
+                        obj => obj.RegisIsolationStatus == input.RegisIsolationStatus)
+                    .WhereIf(input.CancelIsolationStatus != 2,
+                        obj => obj.CancelIsolationStatus == input.CancelIsolationStatus)
+                    .WhereIf(input.FinishIsolationStatus != 2,
+                        obj => obj.FinishIsolationStatus == input.FinishIsolationStatus)
                     .Count();
 
                 return objResult;

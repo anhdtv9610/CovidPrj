@@ -20,6 +20,9 @@ namespace Mgm.User.Dtos
         public int IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-        //public List<TestHealthOutput> TestHealthList { get; set; }
+        public int IsRegisAdmin { get; set; }
+        public int NumberRating { get; set; }
+        public double Rating { get; set; }
+
     }
 }

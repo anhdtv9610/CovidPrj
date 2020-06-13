@@ -63,7 +63,9 @@ namespace Mgm.User
                         t1.Address,
                         t1.IsActive,
                         t1.CreatedDate,
-                        t1.UpdatedDate
+                        t1.UpdatedDate,
+                        t1.NumberRating,
+                        t1.Rating
                     })
                     .Join(_provinceRepository.GetAll(), t1 => t1.ProvinceCode, t2 => t2.ProvinceCode,
                     (t1, t2) => new
@@ -81,10 +83,13 @@ namespace Mgm.User
                         t1.Address,
                         t1.IsActive,
                         t1.CreatedDate,
-                        t1.UpdatedDate
+                        t1.UpdatedDate,
+                        t1.NumberRating,
+                        t1.Rating
                     })
                     .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
-                        obj => obj.Username.Equals(input.Keyword))
+                        obj => obj.Username.Contains(input.Keyword) ||
+                        obj.CMND.Contains(input.Keyword))
                     .Select(x => new UsersOutput()
                     {
                         Username = x.Username,
@@ -100,7 +105,9 @@ namespace Mgm.User
                         Address = x.Address,
                         IsActive = x.IsActive,
                         CreatedDate = x.CreatedDate,
-                        UpdatedDate = x.UpdatedDate
+                        UpdatedDate = x.UpdatedDate,
+                        NumberRating = x.NumberRating,
+                        Rating = x.Rating
 
                     })
                     .Where(x => x.IsActive == 1)
@@ -110,7 +117,8 @@ namespace Mgm.User
 
                 objResult.totalCount = _usersRepository.GetAll()
                     .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
-                        obj => obj.Id.Equals(input.Keyword))
+                        obj => obj.Username.Contains(input.Keyword) ||
+                        obj.CMND.Contains(input.Keyword))
                     .Count();
 
                 return objResult;
@@ -142,7 +150,10 @@ namespace Mgm.User
                         t1.Address,
                         t1.IsActive,
                         t1.CreatedDate,
-                        t1.UpdatedDate
+                        t1.UpdatedDate,
+                        t1.IsRegisAdmin,
+                        t1.NumberRating,
+                        t1.Rating
                     })
                     .Join(_provinceRepository.GetAll(), t1 => t1.ProvinceCode, t2 => t2.ProvinceCode,
                     (t1, t2) => new
@@ -160,7 +171,10 @@ namespace Mgm.User
                         t1.Address,
                         t1.IsActive,
                         t1.CreatedDate,
-                        t1.UpdatedDate
+                        t1.UpdatedDate,
+                        t1.IsRegisAdmin,
+                        t1.NumberRating,
+                        t1.Rating
                     })
                     .Where(x => x.Username.Equals(username))
                     .ToList()
@@ -179,7 +193,10 @@ namespace Mgm.User
                         Address = x.Address,
                         IsActive = x.IsActive,
                         CreatedDate = x.CreatedDate,
-                        UpdatedDate = x.UpdatedDate
+                        UpdatedDate = x.UpdatedDate,
+                        IsRegisAdmin = x.IsRegisAdmin,
+                        NumberRating = x.NumberRating,
+                        Rating = x.Rating
 
                     })
                     .FirstOrDefault();
@@ -230,7 +247,10 @@ namespace Mgm.User
                         Address = input.Address,
                         IsActive = 1,
                         CreatedDate = DateTime.UtcNow,
-                        UpdatedDate = DateTime.UtcNow
+                        UpdatedDate = DateTime.UtcNow,
+                        IsRegisAdmin = 0,
+                        NumberRating = 0,
+                        Rating = 0
                     });
 
                     await _testHealthRepository.InsertAsync(new TestHealth()
@@ -301,6 +321,7 @@ namespace Mgm.User
                     user.Address = input.Address;
                     user.IsActive = Flag.Active;
                     user.UpdatedDate = DateTime.UtcNow;
+                    user.IsRegisAdmin = input.IsRegisAdmin;
 
                     await _usersRepository.UpdateAsync(user);
                 }
@@ -452,6 +473,118 @@ namespace Mgm.User
                 else
                 {
                     throw new UserFriendlyException(200, L("UserNotFound"));
+                }
+
+                ResultDto result = new ResultDto();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
+
+        public async Task<ResultDto> UpdateRating(RatingInput input)
+        {
+            try
+            {
+                var admin = await _usersRepository.GetAll()
+                    .Where(x => x.Username.Equals(input.Username))
+                    .FirstOrDefaultAsync();
+
+                if (admin != null)
+                {
+                    if(admin.GroupCode.Equals("ADMIN"))
+                    {
+                        if (admin.Rating == 0)
+                        {
+                            admin.Rating = input.Rating;
+                        }
+                        else
+                        {
+                            admin.Rating = (admin.Rating * admin.NumberRating + input.Rating) / (admin.NumberRating + 1);
+                        }
+                        admin.NumberRating = admin.NumberRating + 1;
+
+                        await _usersRepository.UpdateAsync(admin);
+                    }
+                    
+                }
+                else
+                {
+                    throw new UserFriendlyException(200, L("UserNotFound"));
+                }
+
+                ResultDto result = new ResultDto();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
+
+        public async Task<ResultDto> ApprovedAdmin(string username)
+        {
+            try
+            {
+                var approved = await _usersRepository.GetAll()
+                    .Where(x => x.Username.Equals(username))
+                    .FirstOrDefaultAsync();
+
+                string grpCode = "ADMIN";
+
+                if (approved != null)
+                {
+                    if (approved.GroupCode.Equals("USER"))
+                    {
+                        approved.GroupCode = grpCode;
+
+                        await _usersRepository.UpdateAsync(approved);
+                    }
+
+                }
+                else
+                {
+                    throw new UserFriendlyException(200, L("Error!"));
+                }
+
+                ResultDto result = new ResultDto();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
+
+        public async Task<ResultDto> CancelledAdmin(string username)
+        {
+            try
+            {
+                var cancel = await _usersRepository.GetAll()
+                    .Where(x => x.Username.Equals(username))
+                    .FirstOrDefaultAsync();
+
+                string grpCode = "USER";
+
+                if (cancel != null)
+                {
+                    if (cancel.GroupCode.Equals("ADMIN"))
+                    {
+                        cancel.GroupCode = grpCode;
+                        cancel.IsRegisAdmin = 0;
+
+                        await _usersRepository.UpdateAsync(cancel);
+                    }
+
+                }
+                else
+                {
+                    throw new UserFriendlyException(200, L("Error!"));
                 }
 
                 ResultDto result = new ResultDto();

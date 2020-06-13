@@ -1,4 +1,4 @@
-
+﻿
 DROP TABLE PositionHistoryDetail
 go
 
@@ -7,7 +7,7 @@ CREATE TABLE PositionHistoryDetail (
        TimeOutId            int NOT NULL,
        Lng                  float NOT NULL,
        Lat                  float NOT NULL,
-       [Address]              nvarchar(2000) NOT NULL,
+       [Address]            nvarchar(2000) NOT NULL,
        IsWarning            int NOT NULL,
        VerifyDate           datetime
 )
@@ -26,9 +26,7 @@ go
 CREATE TABLE PositionHistory (
        Id                   int NOT NULL,
        Username             nvarchar(50) NOT NULL,
-       Radius               int NOT NULL,
        [TimeOut]            int NOT NULL,
-       IsActive             int NOT NULL,
        CreatedDate          datetime
 )
 go
@@ -55,6 +53,7 @@ CREATE TABLE PositonWarning (
        Radius               int NOT NULL,
        IsCallAPI            int NOT NULL,
        IsActive             int NOT NULL,
+       Username             nvarchar(50),
        CreatedDate          datetime,
        UpdatedDate          datetime
 )
@@ -83,5 +82,69 @@ ALTER TABLE PositionHistory
                              ON UPDATE NO ACTION
 go
 
+ALTER TABLE PositonWarning
+       ADD CONSTRAINT R_1266
+              FOREIGN KEY (Username)
+                             REFERENCES [User]  (Username)
+                             ON DELETE NO ACTION
+                             ON UPDATE NO ACTION
+go
 
 
+
+---------------------------------------------------------------------
+
+Alter table [User]
+	Add NumberRating int null
+
+
+Alter table [User]
+	Add Rating float null
+
+Alter table [User]
+	Add IsRegisAdmin int null
+
+---- update IsRegisAdmin: admin: 1, user: 0
+update t
+set t.IsRegisAdmin = 1
+from [User] t
+where (1=1)
+	and t.GroupCode = 'ADMIN'
+	--or t.GroupCode = 'SADMIN'
+;
+update t
+set t.IsRegisAdmin = 0
+from [User] t
+where (1=1)
+	and t.GroupCode = 'USER'
+;
+
+-----------------------------------------------
+
+update t
+set t.NumberRating = 0
+from [User] t
+where (1=1)
+;
+
+
+update t
+set t.Rating = 0
+from [User] t
+where (1=1)
+;
+
+Alter table [User]
+	alter column Rating float not null
+
+Alter table [User]
+	alter column NumberRating int not null
+
+Alter table [User]
+	alter column IsRegisAdmin int not null
+
+
+--------------------------------------------------------
+
+insert into UserGroup(GroupCode, GroupName, [Description], IsActive, CreatedDate, UpdatedDate)
+values ('SADMIN', 'SAdmin', N'Quản trị hệ thống', 1, '2020-05-29 00:00:00.000', '2020-05-29 00:00:00.000')

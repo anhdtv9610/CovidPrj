@@ -20,5 +20,8 @@ namespace Mgm.Covid19.User
         public int IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public int IsRegisAdmin { get; set; }  // Đăng ký Admin
+        public int NumberRating { get; set; }  // Số lượt đánh giá
+        public double Rating { get; set; }  // Điểm đánh giá trung bình
     }
 }
