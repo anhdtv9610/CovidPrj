@@ -1,29 +1,29 @@
 ﻿using Abp.Application.Services;
 using System.Web.Http;
-using Mgm.RegisIsolation.Dtos;
+using Mgm.PositionWarning.Dtos;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mgm.Utility.Dtos;
-using Mgm.MgmSys.MgmUser;
+using Mgm.Covid19.PositionWarning;
 
 namespace Mgm.PositionWarning
 {
     public interface IPositionWarningAppService : IApplicationService
     {
-        //[HttpPost]
-        //PageResultDto<RegisIsolationOutput> GetRegisIsolationsList(FilterInput input);
+        [HttpPost]
+        PageResultDto<PositionWarningOutput> GetPositionWarningList();
 
-        //[HttpGet]
-        //RegisIsolationOutput GetRegisIsolationDetail(string username);
+        [HttpGet]
+        PositionWarningOutput GetPositionWarningDetail(int id);
 
-        //[HttpPost]
-        //Task<ResultDto> CreateRegisIsolation(CreateRegisIsolationInput input);
+        [HttpPost]
+        Task<ResultDto> CreatePositionWarning(CreatePWarningInput input);
 
-        //[HttpPost]
-        //Task<ResultDto> UpdateFinishIsolation(FinishIsolationInput input);
+        [HttpPost]
+        Task<ResultDto> UpdatePositionWarning(UpdatePWarningInput input);
 
-        //[HttpPost]
-        //Task<ResultDto> UpdateApprovedIsolation(CancelIsolationInput input);
+        [HttpPost] 
+        Task<ResultDto> CreateMultiPositionWarning(CreateMultiPWarningInput input);
 
     }
 }
