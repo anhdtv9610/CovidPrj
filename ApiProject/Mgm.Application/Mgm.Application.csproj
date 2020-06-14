@@ -255,6 +255,7 @@
     <Compile Include="PositionWarning\Dtos\CreatePWarningInput.cs" />
     <Compile Include="PositionWarning\Dtos\PositionWarningOutput.cs" />
     <Compile Include="PositionWarning\Dtos\PWarningListInput.cs" />
+    <Compile Include="PositionWarning\Dtos\UpdatePWarningInput.cs" />
     <Compile Include="PositionWarning\IPositionWarningAppService.cs" />
     <Compile Include="PositionWarning\PositionWarningAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

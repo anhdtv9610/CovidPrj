@@ -118,106 +118,128 @@ namespace Mgm.PositionWarning
             }
         }
 
-        //public async Task<ResultDto> CreatePositionWarning(CreatePWarningInput input)
-        //{
-        //    try
-        //    {
-        //        var chckUser = await _positionsWarningRepository.GetAll()
-        //            .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && (x.CancelIsolationStatus == CancelIso.WAIT || (x.CancelIsolationStatus == CancelIso.APPROVED && x.FinishIsolationStatus == Flag.InActive)))
-        //            //.OrderByDescending(x => x.Id)
-        //            .ToListAsync();
+        public async Task<ResultDto> CreatePositionWarning(CreatePWarningInput input)
+        {
+            try
+            {
+                var chckposition = await _positionsWarningRepository.GetAll()
+                    .Where(x => x.Name.Equals(input.Name) || (x.Lat == input.Lat && x.Lng == input.Lng))
+                    //.OrderByDescending(x => x.Id)
+                    .ToListAsync();
 
-        //        if (chckUser.Count == 0)
-        //        {
-        //            await _regisIsolationsRepository.InsertAsync(new RegisIsolations()
-        //            {
-        //                Username = input.Username,
-        //                ProvinceCode = input.ProvinceCode,
-        //                DistrictCode = input.DistrictCode,
-        //                RegisAddress = input.RegisAddress,
-        //                RegisIsolationStatus = Flag.Active,
-        //                RegisDate = DateTime.UtcNow,
-        //                FinishIsolationStatus = Flag.InActive,
-        //                FinishDate = null,
-        //                CancelIsolationStatus = CancelIso.WAIT,
-        //                CancelDate = DateTime.UtcNow
-        //            });
-        //        }
-        //        else
-        //        {
-        //            throw new UserFriendlyException(400, L("UserRegisterIsolated"));
-        //        }
+                if (chckposition.Count == 0)
+                {
+                    await _positionsWarningRepository.InsertAsync(new PositionsWarning()
+                    {
+                        Name = input.Name,
+                        VerifyDate = input.VerifyDate,
+                        Note = input.Note,
+                        Lng = input.Lng,
+                        Lat =input.Lat,
+                        Address = input.Address,
+                        PatientGroup = null,
+                        TimeOut = input.TimeOut,
+                        Radius = input.Radius,
+                        CreatedAdmin = input.CreatedAdmin,
+                        IsCallAPI = Flag.InActive,
+                        IsActive = Flag.Active,
+                        CreatedDate = DateTime.UtcNow,
+                        UpdatedDate = DateTime.UtcNow
+                    });
+                }
+                else
+                {
+                    throw new UserFriendlyException(400, L("PositionWarningExist!"));
+                }
 
-        //        ResultDto result = new ResultDto();
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
+                ResultDto result = new ResultDto();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
 
-        //public async Task<ResultDto> UpdateFinishIsolation(FinishIsolationInput input)
-        //{
-        //    try
-        //    {
-        //        var finish = await _regisIsolationsRepository.GetAll()
-        //            .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.APPROVED)
-        //            //.OrderByDescending(x => x.Id)
-        //            .FirstOrDefaultAsync();
+        public async Task<ResultDto> UpdatePositionWarning(UpdatePWarningInput input)
+        {
+            try
+            {
+                var chckposition = await _positionsWarningRepository.GetAll()
+                    .Where(x => x.Name.Equals(input.Name))
+                    //.OrderByDescending(x => x.Id)
+                    .FirstOrDefaultAsync();
 
-        //        if (finish != null)
-        //        {
-        //            finish.FinishIsolationStatus = input.FinishIsolationStatus;
-        //            finish.FinishDate = DateTime.UtcNow;
+                if (chckposition != null)
+                {
+                    if(chckposition.IsCallAPI == Flag.InActive)
+                    {
+                        chckposition.Note = input.Note;
+                        chckposition.IsActive = input.IsActive;
+                    }
+                    chckposition.TimeOut = input.TimeOut;
+                    chckposition.Radius = input.Radius;
+                    chckposition.UpdatedDate = DateTime.UtcNow;
 
-        //            await _regisIsolationsRepository.UpdateAsync(finish);
-        //        }
-        //        else
-        //        {
-        //            throw new UserFriendlyException(400, L("UserNotFound"));
-        //        }
+                    await _positionsWarningRepository.UpdateAsync(chckposition);
+                }
+                else
+                {
+                    throw new UserFriendlyException(400, L("PositionNotFound"));
+                }
 
-        //        ResultDto result = new ResultDto();
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
+                ResultDto result = new ResultDto();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
 
-        //public async Task<ResultDto> UpdateApprovedIsolation(CancelIsolationInput input)
-        //{
-        //    try
-        //    {
-        //        var approved = await _regisIsolationsRepository.GetAll()
-        //            .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.WAIT)
-        //            //.OrderByDescending(x => x.Id)
-        //            .FirstOrDefaultAsync();
+        public async Task<ResultDto> CreateMultiPositionWarning(CreateMultiPWarningInput input)
+        {
+            try
+            {
+                ResultDto result = new ResultDto();
 
-        //        if (approved != null)
-        //        {
-        //            approved.CancelIsolationStatus = input.CancelIsolationStatus;
-        //            approved.CancelDate = DateTime.UtcNow;
+                for (int i = 0; i < input.PWarningList.Count; i++)
+                {
+                    var item = input.PWarningList[i];
+                    var position = _positionsWarningRepository.GetAll().
+                        Where(x => x.Name.Equals(item.Name))
+                        .ToListAsync();
 
-        //            await _regisIsolationsRepository.UpdateAsync(approved);
-        //        }
-        //        else
-        //        {
-        //            throw new UserFriendlyException(400, L("UserNotFound"));
-        //        }
-
-        //        ResultDto result = new ResultDto();
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
+                    if (position == null)
+                    {
+                        await _positionsWarningRepository.InsertAsync(new PositionsWarning()
+                        {
+                            Name = item.Name,
+                            VerifyDate = item.VerifyDate,
+                            Note = item.Note,
+                            Lng = item.Lng,
+                            Lat = item.Lat,
+                            Address = item.Address,
+                            PatientGroup = item.PatientGroup,
+                            TimeOut = 300,
+                            Radius = 50,
+                            CreatedAdmin = null,
+                            IsCallAPI = Flag.Active,
+                            IsActive = Flag.Active,
+                            CreatedDate = DateTime.UtcNow,
+                            UpdatedDate = DateTime.UtcNow
+                        });
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
     }
 }
