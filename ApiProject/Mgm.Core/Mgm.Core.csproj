@@ -158,9 +158,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Covid19\ConnectRate\ConnectRate.cs" />
     <Compile Include="Covid19\KBYT\KBYT.cs" />
     <Compile Include="Covid19\Mst_District\Mst_District.cs" />
     <Compile Include="Covid19\Mst_Province\Mst_Province.cs" />
+    <Compile Include="Covid19\PositionHistory\PositionHistory.cs" />
+    <Compile Include="Covid19\PositionHistory\PositionHistoryDetail.cs" />
+    <Compile Include="Covid19\PositionWarning\PositionWarning.cs" />
     <Compile Include="Covid19\RegisIsolation\RegisIsolation.cs" />
     <Compile Include="Covid19\TestHealth\TestHealth.cs" />
     <Compile Include="Covid19\UserGroup\UserGroup.cs" />

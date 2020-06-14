@@ -38,8 +38,8 @@ namespace Mgm.User
         Task<ResultDto> UpdateRating(RatingInput input);
 
         [HttpPost]
-        Task<ResultDto> ApprovedAdmin(string username);
+        Task<ResultDto> ApprovedAdmin(ApprovedInput input);
         [HttpPost]
-        Task<ResultDto> CancelledAdmin(string username);
+        Task<ResultDto> CancelledAdmin(ApprovedInput input);
     }
 }

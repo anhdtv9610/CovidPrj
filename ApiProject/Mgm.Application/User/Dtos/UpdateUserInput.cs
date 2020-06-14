@@ -21,7 +21,6 @@ namespace Mgm.User.Dtos
         public string DistrictCode { get; set; }
         [Required]
         public string Address { get; set; }
-        public int IsActive { get; set; }
         public int IsRegisAdmin { get; set; }
     }
 }

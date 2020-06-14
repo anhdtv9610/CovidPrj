@@ -28900,3 +28900,61 @@ DEBUG 2020-06-14 00:44:26,130 [27   ] Abp.Logging.LogHelper                    -
 DEBUG 2020-06-14 00:44:26,133 [27   ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.KBYT.IKBYTAppService' with service name 'app/kBYT'.
 DEBUG 2020-06-14 00:44:26,135 [27   ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Authentication.IAuthAppService' with service name 'app/auth'.
 DEBUG 2020-06-14 00:44:26,137 [27   ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Address.IAddressAppService' with service name 'app/address'.
+DEBUG 2020-06-15 00:21:10,048 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-06-15 00:21:10,108 [1    ] Abp.Modules.AbpModuleManager             - Found 12 ABP modules in total.
+DEBUG 2020-06-15 00:21:10,121 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.Web.MgmWebModule, Mgm.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,127 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmDataModule, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,128 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkModule, Abp.EntityFramework, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,128 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,128 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,129 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmCoreModule, Mgm.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,129 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmApplicationModule, Mgm.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,129 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmWebApiModule, Mgm.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,130 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.WebApi.AbpWebApiModule, Abp.Web.Api, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,130 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebModule, Abp.Web, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,131 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,131 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.Mvc.AbpWebMvcModule, Abp.Web.Mvc, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,139 [1    ] Abp.Modules.AbpModuleManager             - 12 modules loaded.
+DEBUG 2020-06-15 00:21:10,693 [1    ] EntityFramework.AbpEntityFrameworkModule - Registering DbContext: Mgm.EntityFramework.MgmSys.MgmSysDbContext, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:10,723 [1    ] EntityFramework.AbpEntityFrameworkModule - Registering DbContext: Mgm.EntityFramework.Covid19.Covid19DbContext, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:21:16,473 [1    ] Abp.Localization.LocalizationManager     - Initializing 3 localization sources.
+DEBUG 2020-06-15 00:21:16,530 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-06-15 00:21:16,534 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-06-15 00:21:16,534 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Mgm
+DEBUG 2020-06-15 00:21:16,830 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2020-06-15 00:21:16,869 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.User.IUserAppService' with service name 'app/user'.
+DEBUG 2020-06-15 00:21:16,872 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.UserGroup.IUserGroupAppService' with service name 'app/userGroup'.
+DEBUG 2020-06-15 00:21:16,873 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.RegisIsolation.IRegisIsolationAppService' with service name 'app/regisIsolation'.
+DEBUG 2020-06-15 00:21:16,875 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.PositionWarning.IPositionWarningAppService' with service name 'app/positionWarning'.
+DEBUG 2020-06-15 00:21:16,879 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.KBYT.IKBYTAppService' with service name 'app/kBYT'.
+DEBUG 2020-06-15 00:21:16,881 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Authentication.IAuthAppService' with service name 'app/auth'.
+DEBUG 2020-06-15 00:21:16,883 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Address.IAddressAppService' with service name 'app/address'.
+DEBUG 2020-06-15 00:39:17,376 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-06-15 00:39:17,411 [1    ] Abp.Modules.AbpModuleManager             - Found 12 ABP modules in total.
+DEBUG 2020-06-15 00:39:17,430 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.Web.MgmWebModule, Mgm.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,436 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmDataModule, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,437 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkModule, Abp.EntityFramework, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,438 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,438 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,439 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmCoreModule, Mgm.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,439 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmApplicationModule, Mgm.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,439 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmWebApiModule, Mgm.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,440 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.WebApi.AbpWebApiModule, Abp.Web.Api, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,440 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebModule, Abp.Web, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,441 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,452 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.Mvc.AbpWebMvcModule, Abp.Web.Mvc, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,460 [1    ] Abp.Modules.AbpModuleManager             - 12 modules loaded.
+DEBUG 2020-06-15 00:39:17,933 [1    ] EntityFramework.AbpEntityFrameworkModule - Registering DbContext: Mgm.EntityFramework.MgmSys.MgmSysDbContext, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:17,961 [1    ] EntityFramework.AbpEntityFrameworkModule - Registering DbContext: Mgm.EntityFramework.Covid19.Covid19DbContext, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-15 00:39:22,318 [1    ] Abp.Localization.LocalizationManager     - Initializing 3 localization sources.
+DEBUG 2020-06-15 00:39:22,369 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-06-15 00:39:22,373 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-06-15 00:39:22,374 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Mgm
+DEBUG 2020-06-15 00:39:22,720 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2020-06-15 00:39:22,771 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.User.IUserAppService' with service name 'app/user'.
+DEBUG 2020-06-15 00:39:22,773 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.UserGroup.IUserGroupAppService' with service name 'app/userGroup'.
+DEBUG 2020-06-15 00:39:22,775 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.RegisIsolation.IRegisIsolationAppService' with service name 'app/regisIsolation'.
+DEBUG 2020-06-15 00:39:22,777 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.PositionWarning.IPositionWarningAppService' with service name 'app/positionWarning'.
+DEBUG 2020-06-15 00:39:22,779 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.KBYT.IKBYTAppService' with service name 'app/kBYT'.
+DEBUG 2020-06-15 00:39:22,781 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Authentication.IAuthAppService' with service name 'app/auth'.
+DEBUG 2020-06-15 00:39:22,783 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Address.IAddressAppService' with service name 'app/address'.

@@ -12,6 +12,9 @@ using Mgm.Covid19.User;
 using Mgm.Covid19.TestHealth;
 using Mgm.Covid19.Mst_Province;
 using Mgm.Covid19.Mst_District;
+using Mgm.Covid19.ConnectRate;
+using Mgm.Covid19.PositionWarning;
+using Mgm.Covid19.PositionHistory;
 //using Mgm.MgmSys.MgmUserGroup;
 using Mgm.User.Dtos;
 using Mgm.Utility;
@@ -28,17 +31,23 @@ namespace Mgm.User
         private readonly IRepository<TestHealth> _testHealthRepository;
         private readonly IRepository<Mst_Province> _provinceRepository;
         private readonly IRepository<Mst_District> _districtRepository;
+        private readonly IRepository<ConnectRate> _connectRateRepository;
+        private readonly IRepository<PositionsWarning> _positionsWarningRepository;
 
         public UserAppService(
             IRepository<Users> usersRepository,
             IRepository<TestHealth> testHealthRepository,
             IRepository<Mst_Province> provinceRepository,
-            IRepository<Mst_District> districtRepository)
+            IRepository<Mst_District> districtRepository,
+            IRepository<ConnectRate> connectRateRepository,
+            IRepository<PositionsWarning> positionsWarningRepository)
         {
             _usersRepository = usersRepository;
             _testHealthRepository = testHealthRepository;
             _provinceRepository = provinceRepository;
             _districtRepository = districtRepository;
+            _connectRateRepository = connectRateRepository;
+            _positionsWarningRepository = positionsWarningRepository;
         }
 
         public PageResultDto<UsersOutput> GetUserList(FilterInput input)
@@ -64,6 +73,7 @@ namespace Mgm.User
                         t1.IsActive,
                         t1.CreatedDate,
                         t1.UpdatedDate,
+                        t1.IsRegisAdmin,
                         t1.NumberRating,
                         t1.Rating
                     })
@@ -84,12 +94,15 @@ namespace Mgm.User
                         t1.IsActive,
                         t1.CreatedDate,
                         t1.UpdatedDate,
+                        t1.IsRegisAdmin,
                         t1.NumberRating,
                         t1.Rating
                     })
                     .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
                         obj => obj.Username.Contains(input.Keyword) ||
                         obj.CMND.Contains(input.Keyword))
+                    .WhereIf(input.IsRegisAdmin != 2,
+                        obj => obj.IsRegisAdmin == input.IsRegisAdmin)
                     .Select(x => new UsersOutput()
                     {
                         Username = x.Username,
@@ -106,6 +119,7 @@ namespace Mgm.User
                         IsActive = x.IsActive,
                         CreatedDate = x.CreatedDate,
                         UpdatedDate = x.UpdatedDate,
+                        IsRegisAdmin = x.IsRegisAdmin,
                         NumberRating = x.NumberRating,
                         Rating = x.Rating
 
@@ -119,6 +133,8 @@ namespace Mgm.User
                     .WhereIf(!input.Keyword.IsNullOrWhiteSpace(),
                         obj => obj.Username.Contains(input.Keyword) ||
                         obj.CMND.Contains(input.Keyword))
+                    .WhereIf(input.IsRegisAdmin != 2,
+                        obj => obj.IsRegisAdmin == input.IsRegisAdmin)
                     .Count();
 
                 return objResult;
@@ -214,12 +230,12 @@ namespace Mgm.User
             {
                 if (!new Regex(PasswordRegex).IsMatch(input.Password))
                 {
-                    throw new UserFriendlyException(200, L("InvalidPasswordFormat"));
+                    throw new UserFriendlyException(400, L("InvalidPasswordFormat"));
                 }
 
                 if (!input.Password.Equals(input.ConfirmPassword))
                 {
-                    throw new UserFriendlyException(200, L("TwoPasswordsThatYouEnterIsInconsistent"));
+                    throw new UserFriendlyException(400, L("TwoPasswordsThatYouEnterIsInconsistent"));
                 }
 
                 var culture = CultureInfo.InvariantCulture;
@@ -266,7 +282,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(200, L("UserOrCMNDExisted"));
+                    throw new UserFriendlyException(400, L("UserOrCMNDExisted"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -311,7 +327,7 @@ namespace Mgm.User
                     }
                     else
                     {
-                        throw new UserFriendlyException(200, L("TheCMNDInputAlreadyExist"));
+                        throw new UserFriendlyException(400, L("TheCMNDInputAlreadyExist"));
                     }
                     user.FullName = input.FullName;
                     user.BirthDay = birthDate;
@@ -327,7 +343,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(200, L("UserNotFound"));
+                    throw new UserFriendlyException(400, L("UserNotFound"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -472,7 +488,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(200, L("UserNotFound"));
+                    throw new UserFriendlyException(400, L("UserNotFound"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -490,12 +506,16 @@ namespace Mgm.User
             try
             {
                 var admin = await _usersRepository.GetAll()
-                    .Where(x => x.Username.Equals(input.Username))
+                    .Where(x => x.Username.Equals(input.CreatedAdmin) && x.GroupCode.Equals("ADMIN"))
                     .FirstOrDefaultAsync();
+
+                var connectRate = await _connectRateRepository.GetAll()
+                    .Where(x => x.UserRating.Equals(input.UserRating) && x.IdWarning == input.IdWarning)
+                    .ToListAsync();
 
                 if (admin != null)
                 {
-                    if(admin.GroupCode.Equals("ADMIN"))
+                    if (connectRate.Count == 0)
                     {
                         if (admin.Rating == 0)
                         {
@@ -509,11 +529,15 @@ namespace Mgm.User
 
                         await _usersRepository.UpdateAsync(admin);
                     }
-                    
+                    else
+                    {
+                        throw new UserFriendlyException(400, L("UserHasRated!"));
+                    }    
+
                 }
                 else
                 {
-                    throw new UserFriendlyException(200, L("UserNotFound"));
+                    throw new UserFriendlyException(400, L("AdminNotFound!"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -526,12 +550,12 @@ namespace Mgm.User
             }
         }
 
-        public async Task<ResultDto> ApprovedAdmin(string username)
+        public async Task<ResultDto> ApprovedAdmin(ApprovedInput input)
         {
             try
             {
                 var approved = await _usersRepository.GetAll()
-                    .Where(x => x.Username.Equals(username))
+                    .Where(x => x.Username.Equals(input.Username))
                     .FirstOrDefaultAsync();
 
                 string grpCode = "ADMIN";
@@ -548,7 +572,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(200, L("Error!"));
+                    throw new UserFriendlyException(400, L("Error!"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -561,12 +585,12 @@ namespace Mgm.User
             }
         }
 
-        public async Task<ResultDto> CancelledAdmin(string username)
+        public async Task<ResultDto> CancelledAdmin(ApprovedInput input)
         {
             try
             {
                 var cancel = await _usersRepository.GetAll()
-                    .Where(x => x.Username.Equals(username))
+                    .Where(x => x.Username.Equals(input.Username))
                     .FirstOrDefaultAsync();
 
                 string grpCode = "USER";
@@ -584,7 +608,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(200, L("Error!"));
+                    throw new UserFriendlyException(400, L("Error!"));
                 }
 
                 ResultDto result = new ResultDto();
