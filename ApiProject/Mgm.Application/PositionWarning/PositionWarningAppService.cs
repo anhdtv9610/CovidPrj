@@ -39,7 +39,6 @@ namespace Mgm.PositionWarning
                 PageResultDto<PositionWarningOutput> objResult = new PageResultDto<PositionWarningOutput>();
 
                 objResult.items = _positionsWarningRepository.GetAll()
-                    .Where(x => x.IsActive == 1)
                     .Select(x => new PositionWarningOutput()
                     {
                         Name = x.Name,
@@ -55,6 +54,7 @@ namespace Mgm.PositionWarning
                         CreatedDate = x.CreatedDate,
                         UpdatedDate = x.UpdatedDate
                     })
+                    .Where(x => x.IsActive == 1)
                     .ToList();
 
                 objResult.totalCount = _positionsWarningRepository.GetAll()
@@ -122,17 +122,20 @@ namespace Mgm.PositionWarning
         {
             try
             {
+
                 var chckposition = await _positionsWarningRepository.GetAll()
-                    .Where(x => x.Name.Equals(input.Name) || (x.Lat == input.Lat && x.Lng == input.Lng))
-                    //.OrderByDescending(x => x.Id)
+                    .Where(x => x.Name.Equals(input.Name))
                     .ToListAsync();
+
+                //var culture = CultureInfo.InvariantCulture;
+                var verifyDate = DateTime.Parse(input.VerifyDate);
 
                 if (chckposition.Count == 0)
                 {
                     await _positionsWarningRepository.InsertAsync(new PositionsWarning()
                     {
                         Name = input.Name,
-                        VerifyDate = input.VerifyDate,
+                        VerifyDate = verifyDate,
                         Note = input.Note,
                         Lng = input.Lng,
                         Lat =input.Lat,
@@ -167,8 +170,7 @@ namespace Mgm.PositionWarning
             try
             {
                 var chckposition = await _positionsWarningRepository.GetAll()
-                    .Where(x => x.Name.Equals(input.Name))
-                    //.OrderByDescending(x => x.Id)
+                    .Where(x => x.Name.Equals(input.Name) && x.CreatedAdmin.Equals(input.UpdAdmin))
                     .FirstOrDefaultAsync();
 
                 if (chckposition != null)
@@ -212,7 +214,7 @@ namespace Mgm.PositionWarning
                         Where(x => x.Name.Equals(item.Name))
                         .ToListAsync();
 
-                    if (position == null)
+                    if (position != null)
                     {
                         await _positionsWarningRepository.InsertAsync(new PositionsWarning()
                         {

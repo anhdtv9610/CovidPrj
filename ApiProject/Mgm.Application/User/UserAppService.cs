@@ -528,6 +528,15 @@ namespace Mgm.User
                         admin.NumberRating = admin.NumberRating + 1;
 
                         await _usersRepository.UpdateAsync(admin);
+
+                        await _connectRateRepository.InsertAsync(new ConnectRate()
+                        {
+                            UserRating = input.UserRating,
+                            IdWarning = input.IdWarning,
+                            Rating = input.Rating,
+                            IsRating = 1,
+                            CreatedRate = DateTime.UtcNow
+                        });
                     }
                     else
                     {

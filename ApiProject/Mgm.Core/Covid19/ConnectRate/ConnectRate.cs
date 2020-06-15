@@ -7,8 +7,8 @@ namespace Mgm.Covid19.ConnectRate
     [Table("ConnectRate")]
     public class ConnectRate : Entity
     {
-        public string UserRating { get; set; }
         public int IdWarning { get; set; }
+        public string UserRating { get; set; } // User nhóm USER đánh giá
         public int IsRating { get; set; }
         public int Rating { get; set; }
         public DateTime? CreatedRate { get; set; }

@@ -9,5 +9,6 @@ namespace Mgm.PositionWarning.Dtos
         public int TimeOut { get; set; }
         public int Radius { get; set; }
         public int IsActive { get; set; }
+        public string UpdAdmin { get; set; } // Username đăng nhập
     }
 }
