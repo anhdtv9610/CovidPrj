@@ -249,6 +249,10 @@
     <Compile Include="KBYT\KBYTAppService.cs" />
     <Compile Include="MgmApplicationModule.cs" />
     <Compile Include="MgmAppServiceBase.cs" />
+    <Compile Include="PositionHistory\Dtos\CreatePHistoryInput.cs" />
+    <Compile Include="PositionHistory\Dtos\FilterInput.cs" />
+    <Compile Include="PositionHistory\Dtos\PHistoryDeteail.cs" />
+    <Compile Include="PositionHistory\Dtos\PositionHistoryOutput.cs" />
     <Compile Include="PositionHistory\IPositionHistoryAppService.cs" />
     <Compile Include="PositionHistory\PositionHistoryAppService.cs" />
     <Compile Include="PositionWarning\Dtos\CreateMultiPWarningInput.cs" />
@@ -304,9 +308,7 @@
       <Name>Mgm.Utility</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PositionHistory\Dtos\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

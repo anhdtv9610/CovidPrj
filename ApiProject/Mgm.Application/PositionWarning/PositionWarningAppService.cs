@@ -210,11 +210,11 @@ namespace Mgm.PositionWarning
                 for (int i = 0; i < input.PWarningList.Count; i++)
                 {
                     var item = input.PWarningList[i];
-                    var position = _positionsWarningRepository.GetAll().
+                    var position = await _positionsWarningRepository.GetAll().
                         Where(x => x.Name.Equals(item.Name))
                         .ToListAsync();
 
-                    if (position != null)
+                    if (position.Count == 0)
                     {
                         await _positionsWarningRepository.InsertAsync(new PositionsWarning()
                         {
