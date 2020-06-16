@@ -174,7 +174,7 @@ namespace Mgm.PositionWarning
             try
             {
                 var chckposition = await _positionsWarningRepository.GetAll()
-                    .Where(x => x.Name.Equals(input.Name) && x.CreatedAdmin.Equals(input.UpdAdmin))
+                    .Where(x => x.Name.Equals(input.Name) && (x.CreatedAdmin.Equals(input.UpdAdmin) || x.CreatedAdmin == null))
                     .FirstOrDefaultAsync();
 
                 if (chckposition != null)
@@ -215,7 +215,7 @@ namespace Mgm.PositionWarning
                 {
                     var item = input.PWarningList[i];
                     var position = await _positionsWarningRepository.GetAll().
-                        Where(x => x.Name.Equals(item.Name))
+                        Where(x => x.Name.Equals(item.Name) && (x.Lat == item.Lat && x.Lng == item.Lng))
                         .ToListAsync();
 
                     if (position.Count == 0)

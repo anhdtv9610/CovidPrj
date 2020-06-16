@@ -33,6 +33,7 @@ namespace Mgm.User
         private readonly IRepository<Mst_District> _districtRepository;
         private readonly IRepository<ConnectRate> _connectRateRepository;
         private readonly IRepository<PositionsWarning> _positionsWarningRepository;
+        private readonly IRepository<PositionsHistory> _positionsHistoryRepository;
 
         public UserAppService(
             IRepository<Users> usersRepository,
@@ -40,7 +41,8 @@ namespace Mgm.User
             IRepository<Mst_Province> provinceRepository,
             IRepository<Mst_District> districtRepository,
             IRepository<ConnectRate> connectRateRepository,
-            IRepository<PositionsWarning> positionsWarningRepository)
+            IRepository<PositionsWarning> positionsWarningRepository,
+            IRepository<PositionsHistory> positionsHistoryRepository)
         {
             _usersRepository = usersRepository;
             _testHealthRepository = testHealthRepository;
@@ -48,6 +50,7 @@ namespace Mgm.User
             _districtRepository = districtRepository;
             _connectRateRepository = connectRateRepository;
             _positionsWarningRepository = positionsWarningRepository;
+            _positionsHistoryRepository = positionsHistoryRepository;
         }
 
         public PageResultDto<UsersOutput> GetUserList(FilterInput input)
@@ -278,6 +281,12 @@ namespace Mgm.User
                         IsTired = 0,
                         HealthStatus = 0,
                         HealthUpdDate = DateTime.UtcNow
+                    });
+                    await _positionsHistoryRepository.InsertAsync(new PositionsHistory()
+                    {
+                        Username = input.Username,
+                        TimeOut = 30,
+                        CreatedDate = DateTime.UtcNow
                     });
                 }
                 else
