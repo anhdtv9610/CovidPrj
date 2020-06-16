@@ -4,6 +4,7 @@ namespace Mgm.PositionWarning.Dtos
 {
     public class PositionWarningOutput
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string VerifyDate { get; set; }
         public string Note { get; set; }

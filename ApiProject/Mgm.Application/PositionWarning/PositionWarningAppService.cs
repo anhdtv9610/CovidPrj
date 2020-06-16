@@ -41,6 +41,7 @@ namespace Mgm.PositionWarning
                 objResult.items = _positionsWarningRepository.GetAll()
                     .Select(x => new PositionWarningOutput()
                     {
+                        Id = x.Id,
                         Name = x.Name,
                         VerifyDate = x.VerifyDate,
                         Note = x.Note,
@@ -81,6 +82,7 @@ namespace Mgm.PositionWarning
                     .Join(_usersRepository.GetAll(), t1 => t1.CreatedAdmin, t2 => t2.Username,
                     (t1, t2) => new
                     {
+                        t1.Id,
                         t1.Name,
                         t1.VerifyDate,
                         t1.Note,
@@ -99,6 +101,7 @@ namespace Mgm.PositionWarning
                     })
                     .Select(x => new PositionWarningOutput()
                     {
+                        Id = x.Id,
                         Name = x.Name,
                         VerifyDate = x.VerifyDate,
                         Note = x.Note,
