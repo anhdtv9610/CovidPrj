@@ -14,7 +14,7 @@ namespace Mgm.PositionWarning
         PageResultDto<PositionWarningOutput> GetPositionWarningList();
 
         [HttpGet]
-        PositionWarningOutput GetPositionWarningDetail(int id);
+        PositionWarningOutput GetPositionWarningDetail(FilterInput input);
 
         [HttpPost]
         Task<ResultDto> CreatePositionWarning(CreatePWarningInput input);

@@ -16,6 +16,7 @@ namespace Mgm.PositionWarning.Dtos
         public int Radius { get; set; }
         public int IsCallAPI { get; set; }
         public int IsActive { get; set; }
+        public int IsRating { get; set; }
         public string CreatedAdmin { get; set; }
         public string FullName { get; set; }
         public DateTime CreatedDate { get; set; }

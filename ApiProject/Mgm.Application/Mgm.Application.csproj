@@ -257,6 +257,7 @@
     <Compile Include="PositionHistory\PositionHistoryAppService.cs" />
     <Compile Include="PositionWarning\Dtos\CreateMultiPWarningInput.cs" />
     <Compile Include="PositionWarning\Dtos\CreatePWarningInput.cs" />
+    <Compile Include="PositionWarning\Dtos\FilterInput.cs" />
     <Compile Include="PositionWarning\Dtos\PositionWarningOutput.cs" />
     <Compile Include="PositionWarning\Dtos\PWarningListInput.cs" />
     <Compile Include="PositionWarning\Dtos\UpdatePWarningInput.cs" />

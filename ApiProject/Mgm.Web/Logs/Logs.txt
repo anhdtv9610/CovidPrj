@@ -33090,3 +33090,39 @@ DEBUG 2020-06-16 21:10:27,103 [1    ] Abp.Logging.LogHelper                    -
 DEBUG 2020-06-16 21:10:27,105 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Address.IAddressAppService' with service name 'app/address'.
 WARN  2020-06-16 21:10:27,546 [6    ] Abp.Logging.LogHelper                    - ISettingStore is not implemented, using DefaultConfigSettingStore which does not support GetAllListAsync.
 WARN  2020-06-16 21:10:27,632 [6    ] Abp.Logging.LogHelper                    - ISettingStore is not implemented, using DefaultConfigSettingStore which does not support GetAllListAsync.
+DEBUG 2020-06-16 22:52:36,639 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-06-16 22:52:36,681 [1    ] Abp.Modules.AbpModuleManager             - Found 12 ABP modules in total.
+DEBUG 2020-06-16 22:52:36,718 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.Web.MgmWebModule, Mgm.Web, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,741 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmDataModule, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,742 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkModule, Abp.EntityFramework, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,742 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,743 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,743 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmCoreModule, Mgm.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,744 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmApplicationModule, Mgm.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,744 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Mgm.MgmWebApiModule, Mgm.WebApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,744 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.WebApi.AbpWebApiModule, Abp.Web.Api, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,745 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebModule, Abp.Web, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,755 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,755 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.Mvc.AbpWebMvcModule, Abp.Web.Mvc, Version=3.4.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:36,774 [1    ] Abp.Modules.AbpModuleManager             - 12 modules loaded.
+DEBUG 2020-06-16 22:52:38,117 [1    ] EntityFramework.AbpEntityFrameworkModule - Registering DbContext: Mgm.EntityFramework.MgmSys.MgmSysDbContext, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:38,216 [1    ] EntityFramework.AbpEntityFrameworkModule - Registering DbContext: Mgm.EntityFramework.Covid19.Covid19DbContext, Mgm.EntityFramework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-06-16 22:52:44,072 [1    ] Abp.Localization.LocalizationManager     - Initializing 3 localization sources.
+DEBUG 2020-06-16 22:52:44,173 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-06-16 22:52:44,197 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-06-16 22:52:44,197 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Mgm
+DEBUG 2020-06-16 22:52:44,605 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2020-06-16 22:52:44,661 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.User.IUserAppService' with service name 'app/user'.
+DEBUG 2020-06-16 22:52:44,663 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.UserGroup.IUserGroupAppService' with service name 'app/userGroup'.
+DEBUG 2020-06-16 22:52:44,666 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.RegisIsolation.IRegisIsolationAppService' with service name 'app/regisIsolation'.
+DEBUG 2020-06-16 22:52:44,669 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.PositionWarning.IPositionWarningAppService' with service name 'app/positionWarning'.
+DEBUG 2020-06-16 22:52:44,671 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.PositionHistory.IPositionHistoryAppService' with service name 'app/positionHistory'.
+DEBUG 2020-06-16 22:52:44,672 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.KBYT.IKBYTAppService' with service name 'app/kBYT'.
+DEBUG 2020-06-16 22:52:44,674 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Authentication.IAuthAppService' with service name 'app/auth'.
+DEBUG 2020-06-16 22:52:44,678 [1    ] Abp.Logging.LogHelper                    - Dynamic web api controller is created for type 'Mgm.Address.IAddressAppService' with service name 'app/address'.
+WARN  2020-06-16 22:56:38,564 [8    ] Abp.Logging.LogHelper                    - ISettingStore is not implemented, using DefaultConfigSettingStore which does not support GetAllListAsync.
+WARN  2020-06-16 22:56:38,622 [8    ] Abp.Logging.LogHelper                    - ISettingStore is not implemented, using DefaultConfigSettingStore which does not support GetAllListAsync.
+DEBUG 2020-06-16 23:42:24,535 [52   ] Abp.Modules.AbpModuleManager             - Shutting down has been started
+DEBUG 2020-06-16 23:42:24,541 [52   ] Abp.BackgroundJobs.BackgroundJobManager  - Stop background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2020-06-16 23:42:24,543 [52   ] Abp.BackgroundJobs.BackgroundJobManager  - WaitToStop background worker: Abp.BackgroundJobs.BackgroundJobManager
+DEBUG 2020-06-16 23:42:24,543 [52   ] Abp.Modules.AbpModuleManager             - Shutting down completed.

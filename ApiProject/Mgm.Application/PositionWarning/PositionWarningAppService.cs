@@ -10,6 +10,7 @@ using Abp.Extensions;
 using Abp.UI;
 using Mgm.Covid19.User;
 using Mgm.Covid19.PositionWarning;
+using Mgm.Covid19.ConnectRate;
 using Mgm.Utility;
 using Mgm.Utility.Dtos;
 using System.Globalization;
@@ -23,13 +24,16 @@ namespace Mgm.PositionWarning
     {
         private readonly IRepository<Users> _usersRepository;
         private readonly IRepository<PositionsWarning> _positionsWarningRepository;
+        private readonly IRepository<ConnectRate> _connectRateRepository;
 
         public PositionWarningAppService(
             IRepository<Users> usersRepository,
-            IRepository<PositionsWarning> positionsWarningRepository)
+            IRepository<PositionsWarning> positionsWarningRepository,
+            IRepository<ConnectRate> connectRateRepository)
         {
             _usersRepository = usersRepository;
             _positionsWarningRepository = positionsWarningRepository;
+            _connectRateRepository = connectRateRepository;
         }
 
         public PageResultDto<PositionWarningOutput> GetPositionWarningList()
@@ -73,13 +77,13 @@ namespace Mgm.PositionWarning
             }
         }
 
-        public PositionWarningOutput GetPositionWarningDetail(int id)
+        public PositionWarningOutput GetPositionWarningDetail(FilterInput input)
         {
             try
             {
 
                 var pWarning = _positionsWarningRepository.GetAll()
-                    .Where(x => x.Id == id)
+                    .Where(x => x.Id == input.id)
                     .Select(x => new
                     {
                         x.CreatedAdmin
@@ -94,10 +98,19 @@ namespace Mgm.PositionWarning
                     })
                     .FirstOrDefault();
 
+                var chckIsRating = _connectRateRepository.GetAll()
+                    .Where(x => x.IdWarning == input.id && x.UserRating.Equals(input.UserRating))
+                    .Select(x => new
+                    {
+                        x.IsRating
+                    })
+                    .FirstOrDefault();
+
+                int isRating = chckIsRating != null ? chckIsRating.IsRating : 0;
                 string fullName = adminName!= null? adminName.FullName : "";
 
                 return _positionsWarningRepository.GetAll()
-                    .Where(x => x.Id == id && x.IsActive == 1)
+                    .Where(x => x.Id == input.id && x.IsActive == 1)
                     .Select(x => new PositionWarningOutput()
                     {
                         Id = x.Id,
@@ -112,6 +125,7 @@ namespace Mgm.PositionWarning
                         Radius = x.Radius,
                         IsCallAPI = x.IsCallAPI,
                         IsActive = x.IsActive,
+                        IsRating = isRating,
                         CreatedAdmin = x.CreatedAdmin,
                         FullName = fullName,
                         CreatedDate = x.CreatedDate,
