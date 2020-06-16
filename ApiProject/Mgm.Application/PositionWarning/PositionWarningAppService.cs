@@ -48,6 +48,8 @@ namespace Mgm.PositionWarning
                         Lat = x.Lat,
                         Address = x.Address,
                         PatientGroup = x.PatientGroup,
+                        TimeOut = x.TimeOut,
+                        Radius = x.Radius,
                         IsCallAPI = x.IsCallAPI,
                         IsActive = x.IsActive,
                         CreatedAdmin = x.CreatedAdmin,
