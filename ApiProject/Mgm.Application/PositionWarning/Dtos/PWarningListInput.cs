@@ -8,7 +8,7 @@ namespace Mgm.PositionWarning.Dtos
         [Required]
         public string Name { get; set; }
         [Required]
-        public DateTime VerifyDate { get; set; }
+        public string VerifyDate { get; set; }
         [Required]
         public string Note { get; set; }
         [Required]

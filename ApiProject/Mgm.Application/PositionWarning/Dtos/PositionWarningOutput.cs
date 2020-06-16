@@ -5,7 +5,7 @@ namespace Mgm.PositionWarning.Dtos
     public class PositionWarningOutput
     {
         public string Name { get; set; }
-        public DateTime VerifyDate { get; set; }
+        public string VerifyDate { get; set; }
         public string Note { get; set; }
         public double Lng { get; set; }
         public double Lat { get; set; }

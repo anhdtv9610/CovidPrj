@@ -127,15 +127,13 @@ namespace Mgm.PositionWarning
                     .Where(x => x.Name.Equals(input.Name))
                     .ToListAsync();
 
-                //var culture = CultureInfo.InvariantCulture;
-                var verifyDate = DateTime.Parse(input.VerifyDate);
 
                 if (chckposition.Count == 0)
                 {
                     await _positionsWarningRepository.InsertAsync(new PositionsWarning()
                     {
                         Name = input.Name,
-                        VerifyDate = verifyDate,
+                        VerifyDate = input.VerifyDate,
                         Note = input.Note,
                         Lng = input.Lng,
                         Lat =input.Lat,
