@@ -9,114 +9,136 @@ using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.UI;
 using Mgm.Covid19.User;
+using Mgm.Covid19.PositionHistory;
 using Mgm.Covid19.PositionWarning;
 using Mgm.Utility;
 using Mgm.Utility.Dtos;
 using System.Globalization;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
-using Mgm.PositionWarning.Dtos;
+using Mgm.PositionHistory.Dtos;
 
 namespace Mgm.PositionHistory
 {
     public class PositionHistoryAppService : MgmAppServiceBase, IPositionHistoryAppService
     {
         private readonly IRepository<Users> _usersRepository;
+        private readonly IRepository<PositionsHistory> _positionsHistoryRepository;
+        private readonly IRepository<PositionsHistoryDetail> _positionsHistoryDetailRepository;
         private readonly IRepository<PositionsWarning> _positionsWarningRepository;
 
         public PositionHistoryAppService(
             IRepository<Users> usersRepository,
+            IRepository<PositionsHistory> positionsHistoryRepository,
+            IRepository<PositionsHistoryDetail> positionsHistoryDetailRepository,
             IRepository<PositionsWarning> positionsWarningRepository)
         {
             _usersRepository = usersRepository;
+            positionsHistoryRepository = _positionsHistoryRepository;
+            _positionsHistoryDetailRepository = positionsHistoryDetailRepository;
             _positionsWarningRepository = positionsWarningRepository;
         }
 
-        //public PageResultDto<PositionWarningOutput> GetPositionWarningList()
-        //{
-        //    try
-        //    {
-        //        PageResultDto<PositionWarningOutput> objResult = new PageResultDto<PositionWarningOutput>();
+        public PageResultDto<PositionHistoryOutput> GetPositionHistoryList(FilterInput input)
+        {
+            try
+            {
+                PageResultDto<PositionHistoryOutput> objResult = new PageResultDto<PositionHistoryOutput>();
 
-        //        objResult.items = _positionsWarningRepository.GetAll()
-        //            .Select(x => new PositionWarningOutput()
-        //            {
-        //                Name = x.Name,
-        //                VerifyDate = x.VerifyDate,
-        //                Note = x.Note,
-        //                Lng = x.Lng,
-        //                Lat = x.Lat,
-        //                Address = x.Address,
-        //                PatientGroup = x.PatientGroup,
-        //                IsCallAPI = x.IsCallAPI,
-        //                IsActive = x.IsActive,
-        //                CreatedAdmin = x.CreatedAdmin,
-        //                CreatedDate = x.CreatedDate,
-        //                UpdatedDate = x.UpdatedDate
-        //            })
-        //            .Where(x => x.IsActive == 1)
-        //            .ToList();
+                var culture = CultureInfo.InvariantCulture;
+                var fromDate = DateTime.ParseExact(input.DateFrom, "MM/dd/yyyy HH:mm:ss", culture);
+                var toDate = DateTime.ParseExact(input.DateTo, "MM/dd/yyyy HH:mm:ss", culture);
 
-        //        objResult.totalCount = _positionsWarningRepository.GetAll()
-        //            .Where(x => x.IsActive == 1)
-        //            .Count();
+                objResult.items = _positionsHistoryRepository.GetAll()
+                    .WhereIf(!input.Username.IsNullOrWhiteSpace(),
+                        obj => obj.Username.Contains(input.Username))
+                    .Select(x => new PositionHistoryOutput()
+                    {
+                        Username = x.Username,
+                        TimeOut = x.TimeOut,
+                        CreatedDate = x.CreatedDate
+                    })
+                    .Where(x =>
+                        x.CreatedDate >= fromDate &&
+                        x.CreatedDate <= toDate)
+                    .Skip((input.SkipCount - 1) * input.MaxResultCount)
+                    .Take(input.MaxResultCount)
+                    .ToList();
 
-        //        return objResult;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
+                objResult.totalCount = _positionsHistoryRepository.GetAll()
+                    .WhereIf(!input.Username.IsNullOrWhiteSpace(),
+                        obj => obj.Username.Contains(input.Username))
+                    .Where(x =>
+                        x.CreatedDate >= fromDate &&
+                        x.CreatedDate <= toDate)
+                    .Count();
 
-        //public PositionWarningOutput GetPositionWarningDetail(int id)
-        //{
-        //    try
-        //    {
-        //        return _positionsWarningRepository.GetAll()
-        //            .Where(x => x.Id == id && x.IsActive == 1)
-        //            .Join(_usersRepository.GetAll(), t1 => t1.CreatedAdmin, t2 => t2.Username,
-        //            (t1, t2) => new
-        //            {
-        //                t1.Name,
-        //                t1.VerifyDate,
-        //                t1.Note,
-        //                t1.Lng,
-        //                t1.Lat,
-        //                t1.Address,
-        //                t1.PatientGroup,
-        //                t1.IsCallAPI,
-        //                t1.IsActive,
-        //                t1.CreatedAdmin,
-        //                t2.FullName,
-        //                t1.CreatedDate,
-        //                t1.UpdatedDate
-        //            })
-        //            .Select(x => new PositionWarningOutput()
-        //            {
-        //                Name = x.Name,
-        //                VerifyDate = x.VerifyDate,
-        //                Note = x.Note,
-        //                Lng = x.Lng,
-        //                Lat = x.Lat,
-        //                Address = x.Address,
-        //                PatientGroup = x.PatientGroup,
-        //                IsCallAPI = x.IsCallAPI,
-        //                IsActive = x.IsActive,
-        //                CreatedAdmin = x.CreatedAdmin,
-        //                CreatedDate = x.CreatedDate,
-        //                UpdatedDate = x.UpdatedDate
+                return objResult;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
 
-        //            })
-        //            .FirstOrDefault();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
+        public PositionHistoryOutput GetPositionHistoryDetail(int id)
+        {
+            try
+            {
+                PositionHistoryOutput objResult = new PositionHistoryOutput();
+
+                var timeOut = _positionsHistoryRepository.GetAll()
+                    .Where(x => x.Id == id)
+                    .Select(x => new PositionHistoryOutput()
+                    {
+                        Id = id,
+                        TimeOut = x.TimeOut,
+                        Username = x.Username,
+                        CreatedDate = x.CreatedDate
+                    })
+                    .FirstOrDefault();
+
+                var fullNameUser = _usersRepository.GetAll()
+                    .Where(x => x.Username.Equals(timeOut.Username))
+                    .Select(x => new
+                    {
+                        x.FullName
+                    })
+                    .FirstOrDefault();
+
+                if (timeOut == null)
+                {
+                    return null;
+                }
+
+                var pHistoryDetail = _positionsHistoryDetailRepository.GetAll()
+                    .Where(x => x.TimeOutId.Equals(timeOut.Id))
+                    .Select(x => new PHistoryDeteail()
+                    {
+                        Lng = x.Lng,
+                        Lat = x.Lat,
+                        Address = x.Address,
+                        IsWarning = x.IsWarning,
+                        VerifyDate = x.VerifyDate
+                    })
+                    .ToList();
+
+                objResult.Id = timeOut.Id;
+                objResult.TimeOut = timeOut.TimeOut;
+                objResult.Username = timeOut.Username;
+                objResult.FullName = fullNameUser != null ? fullNameUser.FullName : "";
+                objResult.CreatedDate = timeOut.CreatedDate;
+                objResult.PHistoryDeteailList = pHistoryDetail;
+
+                return objResult;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
 
         //public async Task<ResultDto> CreatePositionWarning(CreatePWarningInput input)
         //{
@@ -201,47 +223,40 @@ namespace Mgm.PositionHistory
         //    }
         //}
 
-        //public async Task<ResultDto> CreateMultiPositionWarning(CreateMultiPWarningInput input)
-        //{
-        //    try
-        //    {
-        //        ResultDto result = new ResultDto();
+        public async Task<ResultDto> CreateMultiPositionHistoryDetail(CreatePHistoryInput input)
+        {
+            try
+            {
+                ResultDto result = new ResultDto();
 
-        //        for (int i = 0; i < input.PWarningList.Count; i++)
-        //        {
-        //            var item = input.PWarningList[i];
-        //            var position = _positionsWarningRepository.GetAll().
-        //                Where(x => x.Name.Equals(item.Name))
-        //                .ToListAsync();
 
-        //            if (position != null)
-        //            {
-        //                await _positionsWarningRepository.InsertAsync(new PositionsWarning()
-        //                {
-        //                    Name = item.Name,
-        //                    VerifyDate = item.VerifyDate,
-        //                    Note = item.Note,
-        //                    Lng = item.Lng,
-        //                    Lat = item.Lat,
-        //                    Address = item.Address,
-        //                    PatientGroup = item.PatientGroup,
-        //                    TimeOut = 300,
-        //                    Radius = 50,
-        //                    CreatedAdmin = null,
-        //                    IsCallAPI = Flag.Active,
-        //                    IsActive = Flag.Active,
-        //                    CreatedDate = DateTime.UtcNow,
-        //                    UpdatedDate = DateTime.UtcNow
-        //                });
-        //            }
-        //        }
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error(ex.Message);
-        //        throw new UserFriendlyException(500, ex.Message);
-        //    }
-        //}
+                for (int i = 0; i < input.PHistoryDeteailList.Count; i++)
+                {
+                    var item = input.PHistoryDeteailList[i];
+                    var positionsHistory = _positionsHistoryRepository.GetAll().
+                    Where(x => x.Id == item.TimeOutId)
+                    .FirstOrDefault();
+
+                    if (positionsHistory != null)
+                    {
+                        await _positionsHistoryDetailRepository.InsertAsync(new PositionsHistoryDetail()
+                        {
+                            TimeOutId = positionsHistory.Id,
+                            Lng = item.Lng,
+                            Lat = item.Lat,
+                            Address = item.Address,
+                            IsWarning = item.IsWarning,
+                            VerifyDate = DateTime.UtcNow
+                        });
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
     }
 }

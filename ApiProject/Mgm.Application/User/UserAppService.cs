@@ -138,6 +138,7 @@ namespace Mgm.User
                         obj.CMND.Contains(input.Keyword))
                     .WhereIf(input.IsRegisAdmin != 2,
                         obj => obj.IsRegisAdmin == input.IsRegisAdmin)
+                    .Where(x => x.IsActive == 1)
                     .Count();
 
                 return objResult;
