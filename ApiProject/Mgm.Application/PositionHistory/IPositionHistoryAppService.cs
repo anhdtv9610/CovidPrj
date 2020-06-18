@@ -1,29 +1,23 @@
 ﻿using Abp.Application.Services;
 using System.Web.Http;
-using Mgm.PositionWarning.Dtos;
+using Mgm.PositionHistory.Dtos;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mgm.Utility.Dtos;
-using Mgm.Covid19.PositionWarning;
+using Mgm.Covid19.PositionHistory;
 
 namespace Mgm.PositionHistory
 {
     public interface IPositionHistoryAppService : IApplicationService
     {
-        //[HttpPost]
-        //PageResultDto<PositionWarningOutput> GetPositionWarningList();
+        [HttpPost]
+        PageResultDto<PositionHistoryOutput> GetPositionHistoryList(FilterInput input);
 
-        //[HttpGet]
-        //PositionWarningOutput GetPositionWarningDetail(int id);
+        [HttpGet]
+        PositionHistoryOutput GetPositionHistoryDetail(int id);
 
-        //[HttpPost]
-        //Task<ResultDto> CreatePositionWarning(CreatePWarningInput input);
-
-        //[HttpPost]
-        //Task<ResultDto> UpdatePositionWarning(UpdatePWarningInput input);
-
-        //[HttpPost]
-        //Task<ResultDto> CreateMultiPositionWarning(CreateMultiPWarningInput input);
+        [HttpPost]
+        Task<ResultDto> CreateMultiPositionHistoryDetail(CreatePHistoryInput input);
 
     }
 }

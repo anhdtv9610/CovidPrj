@@ -54,6 +54,7 @@ namespace Mgm.PositionHistory
                         obj => obj.Username.Contains(input.Username))
                     .Select(x => new PositionHistoryOutput()
                     {
+                        Id = x.Id,
                         Username = x.Username,
                         TimeOut = x.TimeOut,
                         CreatedDate = x.CreatedDate
