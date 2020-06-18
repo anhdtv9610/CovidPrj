@@ -19,6 +19,8 @@ namespace Mgm.PositionWarning.Dtos
         public int IsRating { get; set; }
         public string CreatedAdmin { get; set; }
         public string FullName { get; set; }
+        public double Rating { get; set; }
+        public int NumberRating { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
     }

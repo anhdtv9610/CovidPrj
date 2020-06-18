@@ -94,7 +94,9 @@ namespace Mgm.PositionWarning
                     .Where(x => x.Username.Equals(pWarning.CreatedAdmin))
                     .Select(x => new
                     {
-                        x.FullName
+                        x.FullName,
+                        x.Rating,
+                        x.NumberRating
                     })
                     .FirstOrDefault();
 
@@ -108,6 +110,8 @@ namespace Mgm.PositionWarning
 
                 int isRating = chckIsRating != null ? chckIsRating.IsRating : 0;
                 string fullName = adminName!= null? adminName.FullName : "";
+                double rating = adminName != null ? adminName.Rating : 0;
+                int numberRating = adminName != null ? adminName.NumberRating : 0;
 
                 return _positionsWarningRepository.GetAll()
                     .Where(x => x.Id == input.id && x.IsActive == 1)
@@ -128,6 +132,8 @@ namespace Mgm.PositionWarning
                         IsRating = isRating,
                         CreatedAdmin = x.CreatedAdmin,
                         FullName = fullName,
+                        Rating = rating,
+                        NumberRating = numberRating,
                         CreatedDate = x.CreatedDate,
                         UpdatedDate = x.UpdatedDate
 

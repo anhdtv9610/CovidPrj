@@ -10,6 +10,7 @@ using Abp.Extensions;
 using Abp.UI;
 using Mgm.Covid19.User;
 using Mgm.Covid19.PositionHistory;
+using Mgm.Covid19.PositionHistoryDetail;
 using Mgm.Covid19.PositionWarning;
 using Mgm.Utility;
 using Mgm.Utility.Dtos;
@@ -34,7 +35,7 @@ namespace Mgm.PositionHistory
             IRepository<PositionsWarning> positionsWarningRepository)
         {
             _usersRepository = usersRepository;
-            positionsHistoryRepository = _positionsHistoryRepository;
+            _positionsHistoryRepository = positionsHistoryRepository;
             _positionsHistoryDetailRepository = positionsHistoryDetailRepository;
             _positionsWarningRepository = positionsWarningRepository;
         }
@@ -45,9 +46,8 @@ namespace Mgm.PositionHistory
             {
                 PageResultDto<PositionHistoryOutput> objResult = new PageResultDto<PositionHistoryOutput>();
 
-                var culture = CultureInfo.InvariantCulture;
-                var fromDate = DateTime.ParseExact(input.DateFrom, "MM/dd/yyyy HH:mm:ss", culture);
-                var toDate = DateTime.ParseExact(input.DateTo, "MM/dd/yyyy HH:mm:ss", culture);
+                var fromDate = DateTime.Parse(input.DateFrom);
+                var toDate = DateTime.Parse(input.DateTo);
 
                 objResult.items = _positionsHistoryRepository.GetAll()
                     .WhereIf(!input.Username.IsNullOrWhiteSpace(),
@@ -100,6 +100,11 @@ namespace Mgm.PositionHistory
                     })
                     .FirstOrDefault();
 
+                if (timeOut == null)
+                {
+                    return null;
+                }
+
                 var fullNameUser = _usersRepository.GetAll()
                     .Where(x => x.Username.Equals(timeOut.Username))
                     .Select(x => new
@@ -107,11 +112,6 @@ namespace Mgm.PositionHistory
                         x.FullName
                     })
                     .FirstOrDefault();
-
-                if (timeOut == null)
-                {
-                    return null;
-                }
 
                 var pHistoryDetail = _positionsHistoryDetailRepository.GetAll()
                     .Where(x => x.TimeOutId.Equals(timeOut.Id))
@@ -230,13 +230,13 @@ namespace Mgm.PositionHistory
             {
                 ResultDto result = new ResultDto();
 
+                var positionsHistory = _positionsHistoryRepository.GetAll().
+                Where(x => x.Id == input.TimeOutId)
+                .FirstOrDefault();
 
                 for (int i = 0; i < input.PHistoryDeteailList.Count; i++)
                 {
                     var item = input.PHistoryDeteailList[i];
-                    var positionsHistory = _positionsHistoryRepository.GetAll().
-                    Where(x => x.Id == item.TimeOutId)
-                    .FirstOrDefault();
 
                     if (positionsHistory != null)
                     {

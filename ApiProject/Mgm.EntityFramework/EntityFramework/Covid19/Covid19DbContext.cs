@@ -8,6 +8,7 @@ using Mgm.Covid19.Mst_District;
 using Mgm.Covid19.Mst_Province;
 using Mgm.Covid19.PositionWarning;
 using Mgm.Covid19.PositionHistory;
+using Mgm.Covid19.PositionHistoryDetail;
 using Mgm.Covid19.ConnectRate;
 using System.Data.Entity;
 

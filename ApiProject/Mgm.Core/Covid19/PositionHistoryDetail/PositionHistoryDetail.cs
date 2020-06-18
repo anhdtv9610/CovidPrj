@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mgm.Covid19.PositionHistory
+namespace Mgm.Covid19.PositionHistoryDetail
 {
     [Table("PositionHistoryDetail")]
     public class PositionsHistoryDetail : Entity
