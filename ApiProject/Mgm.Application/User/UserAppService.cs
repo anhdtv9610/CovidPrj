@@ -196,6 +196,28 @@ namespace Mgm.User
                         t1.NumberRating,
                         t1.Rating
                     })
+                    .Join(_positionsHistoryRepository.GetAll(), t1 => t1.Username, t2 => t2.Username,
+                    (t1, t2) => new
+                    {
+                        t1.Username,
+                        t1.GroupCode,
+                        t1.FullName,
+                        t1.BirthDay,
+                        t1.Sex,
+                        t1.CMND,
+                        t1.ProvinceCode,
+                        t1.ProvinceName,
+                        t1.DistrictCode,
+                        t1.DistrictName,
+                        t1.Address,
+                        t1.IsActive,
+                        t1.CreatedDate,
+                        t1.UpdatedDate,
+                        t1.IsRegisAdmin,
+                        t1.NumberRating,
+                        t1.Rating,
+                        t2.TimeOut
+                    })
                     .Where(x => x.Username.Equals(username))
                     .ToList()
                     .Select(x => new UsersOutput()
@@ -216,7 +238,8 @@ namespace Mgm.User
                         UpdatedDate = x.UpdatedDate,
                         IsRegisAdmin = x.IsRegisAdmin,
                         NumberRating = x.NumberRating,
-                        Rating = x.Rating
+                        Rating = x.Rating,
+                        TimeOut = x.TimeOut
 
                     })
                     .FirstOrDefault();
@@ -283,12 +306,14 @@ namespace Mgm.User
                         HealthStatus = 0,
                         HealthUpdDate = DateTime.UtcNow
                     });
+
                     await _positionsHistoryRepository.InsertAsync(new PositionsHistory()
                     {
                         Username = input.Username,
                         TimeOut = 30,
                         CreatedDate = DateTime.UtcNow
                     });
+
                 }
                 else
                 {
@@ -309,22 +334,16 @@ namespace Mgm.User
         {
             try
             {
-                //if (!string.IsNullOrEmpty(input.Password) && !new Regex(PasswordRegex).IsMatch(input.Password))
-                //{
-                //    throw new UserFriendlyException(400, L("InvalidPasswordFormat"));
-                //}
-
-                //if (!string.IsNullOrEmpty(input.Password) && !input.Password.Equals(input.ConfirmPassword))
-                //{
-                //    throw new UserFriendlyException(400, L("TwoPasswordsThatYouEnterIsInconsistent"));
-                //}
-
                 var user = await _usersRepository.GetAll()
                     .Where(x => x.Username.Equals(input.Username))
                     .FirstOrDefaultAsync();
 
                 var CheckCMND = _usersRepository.GetAllList()
                     .Where(x => !x.Username.Equals(input.Username) && x.CMND.Equals(input.CMND)).FirstOrDefault();
+
+                var timeOut = await _positionsHistoryRepository.GetAll()
+                    .Where(x => x.Username.Equals(input.Username))
+                    .FirstOrDefaultAsync();
 
                 var culture = CultureInfo.InvariantCulture;
                 var birthDate = DateTime.Parse(input.BirthDay, culture);
@@ -350,6 +369,10 @@ namespace Mgm.User
                     user.IsRegisAdmin = input.IsRegisAdmin;
 
                     await _usersRepository.UpdateAsync(user);
+
+                    timeOut.TimeOut = input.TimeOut;
+
+                    await _positionsHistoryRepository.UpdateAsync(timeOut);
                 }
                 else
                 {

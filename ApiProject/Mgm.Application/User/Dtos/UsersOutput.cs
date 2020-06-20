@@ -23,6 +23,7 @@ namespace Mgm.User.Dtos
         public int IsRegisAdmin { get; set; }
         public int NumberRating { get; set; }
         public double Rating { get; set; }
+        public int TimeOut { get; set; }
 
     }
 }
