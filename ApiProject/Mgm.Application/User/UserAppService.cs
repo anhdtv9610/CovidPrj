@@ -539,7 +539,7 @@ namespace Mgm.User
             try
             {
                 var admin = await _usersRepository.GetAll()
-                    .Where(x => x.Username.Equals(input.CreatedAdmin) && x.GroupCode.Equals("ADMIN"))
+                    .Where(x => x.Username.Equals(input.CreatedAdmin) && !x.GroupCode.Equals("USER"))
                     .FirstOrDefaultAsync();
 
                 var connectRate = await _connectRateRepository.GetAll()

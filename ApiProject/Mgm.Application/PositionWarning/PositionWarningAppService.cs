@@ -43,6 +43,28 @@ namespace Mgm.PositionWarning
                 PageResultDto<PositionWarningOutput> objResult = new PageResultDto<PositionWarningOutput>();
 
                 objResult.items = _positionsWarningRepository.GetAll()
+                    .Join(_usersRepository.GetAll(), t1 => t1.CreatedAdmin, t2 => t2.Username,
+                    (t1, t2) => new
+                    {
+                        t1.Id,
+                        t1.Name,
+                        t1.VerifyDate,
+                        t1.Note,
+                        t1.Lng,
+                        t1.Lat,
+                        t1.Address,
+                        t1.PatientGroup,
+                        t1.TimeOut,
+                        t1.Radius,
+                        t1.IsCallAPI,
+                        t1.IsActive,
+                        t1.CreatedAdmin,
+                        t2.FullName,
+                        t2.Rating,
+                        t2.NumberRating,
+                        t1.CreatedDate,
+                        t1.UpdatedDate
+                    })
                     .Select(x => new PositionWarningOutput()
                     {
                         Id = x.Id,
@@ -58,6 +80,9 @@ namespace Mgm.PositionWarning
                         IsCallAPI = x.IsCallAPI,
                         IsActive = x.IsActive,
                         CreatedAdmin = x.CreatedAdmin,
+                        FullName = x.FullName,
+                        Rating = x.Rating,
+                        NumberRating = x.NumberRating,
                         CreatedDate = x.CreatedDate,
                         UpdatedDate = x.UpdatedDate
                     })
