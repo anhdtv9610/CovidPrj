@@ -41,53 +41,82 @@ namespace Mgm.PositionWarning
             try
             {
                 PageResultDto<PositionWarningOutput> objResult = new PageResultDto<PositionWarningOutput>();
+                var p =
+                       from t1 in _positionsWarningRepository.GetAll()
+                       join t2 in _usersRepository.GetAll() on t1.CreatedAdmin equals t2.Username into t
+                       from t2 in t.DefaultIfEmpty()
+                       where (t1.IsActive == Flag.Active)
+                       select new PositionWarningOutput()
+                       {
+                           Id = t1.Id,
+                           Name = t1.Name,
+                           VerifyDate = t1.VerifyDate,
+                           Note = t1.Note,
+                           Lng = t1.Lng,
+                           Lat = t1.Lat,
+                           Address = t1.Address,
+                           PatientGroup = t1.PatientGroup,
+                           TimeOut = t1.TimeOut,
+                           Radius = t1.Radius,
+                           IsCallAPI = t1.IsCallAPI,
+                           IsActive = t1.IsActive,
+                           CreatedAdmin = t1.CreatedAdmin,
+                           FullName = t1.CreatedAdmin == null ? "" : t2.FullName,
+                           Rating = t1.CreatedAdmin == null ? 0 : t2.Rating,
+                           NumberRating = t1.CreatedAdmin == null ? 0 : t2.NumberRating,
+                           CreatedDate = t1.CreatedDate,
+                           UpdatedDate = t1.UpdatedDate
+                       };
 
-                objResult.items = _positionsWarningRepository.GetAll()
-                    .Join(_usersRepository.GetAll(), t1 => t1.CreatedAdmin, t2 => t2.Username,
-                    (t1, t2) => new
-                    {
-                        t1.Id,
-                        t1.Name,
-                        t1.VerifyDate,
-                        t1.Note,
-                        t1.Lng,
-                        t1.Lat,
-                        t1.Address,
-                        t1.PatientGroup,
-                        t1.TimeOut,
-                        t1.Radius,
-                        t1.IsCallAPI,
-                        t1.IsActive,
-                        t1.CreatedAdmin,
-                        t2.FullName,
-                        t2.Rating,
-                        t2.NumberRating,
-                        t1.CreatedDate,
-                        t1.UpdatedDate
-                    })
-                    .Select(x => new PositionWarningOutput()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        VerifyDate = x.VerifyDate,
-                        Note = x.Note,
-                        Lng = x.Lng,
-                        Lat = x.Lat,
-                        Address = x.Address,
-                        PatientGroup = x.PatientGroup,
-                        TimeOut = x.TimeOut,
-                        Radius = x.Radius,
-                        IsCallAPI = x.IsCallAPI,
-                        IsActive = x.IsActive,
-                        CreatedAdmin = x.CreatedAdmin,
-                        FullName = x.FullName,
-                        Rating = x.Rating,
-                        NumberRating = x.NumberRating,
-                        CreatedDate = x.CreatedDate,
-                        UpdatedDate = x.UpdatedDate
-                    })
-                    .Where(x => x.IsActive == 1)
-                    .ToList();
+                        objResult.items = p.ToList();
+
+                //objResult.items = _positionsWarningRepository.GetAll()
+                //    .Join(_usersRepository.GetAll(), t1 => t1.CreatedAdmin, t2 => t2.Username,
+                //    (t1, t2) => new
+                //    {
+                //        t1.Id,
+                //        t1.Name,
+                //        t1.VerifyDate,
+                //        t1.Note,
+                //        t1.Lng,
+                //        t1.Lat,
+                //        t1.Address,
+                //        t1.PatientGroup,
+                //        t1.TimeOut,
+                //        t1.Radius,
+                //        t1.IsCallAPI,
+                //        t1.IsActive,
+                //        t1.CreatedAdmin,
+                //        t2.FullName,
+                //        t2.Rating,
+                //        t2.NumberRating,
+                //        t1.CreatedDate,
+                //        t1.UpdatedDate
+                //    })
+                //    .DefaultIfEmpty()
+                //    .Select(x => new PositionWarningOutput()
+                //    {
+                //        Id = x.Id,
+                //        Name = x.Name,
+                //        VerifyDate = x.VerifyDate,
+                //        Note = x.Note,
+                //        Lng = x.Lng,
+                //        Lat = x.Lat,
+                //        Address = x.Address,
+                //        PatientGroup = x.PatientGroup,
+                //        TimeOut = x.TimeOut,
+                //        Radius = x.Radius,
+                //        IsCallAPI = x.IsCallAPI,
+                //        IsActive = x.IsActive,
+                //        CreatedAdmin = x.CreatedAdmin,
+                //        FullName = x.FullName,
+                //        Rating = x.Rating,
+                //        NumberRating = x.NumberRating,
+                //        CreatedDate = x.CreatedDate,
+                //        UpdatedDate = x.UpdatedDate
+                //    })
+                //    .Where(x => x.IsActive == 1)
+                //    .ToList();
 
                 objResult.totalCount = _positionsWarningRepository.GetAll()
                     .Where(x => x.IsActive == 1)
