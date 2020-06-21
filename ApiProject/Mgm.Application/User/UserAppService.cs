@@ -216,6 +216,7 @@ namespace Mgm.User
                         t1.IsRegisAdmin,
                         t1.NumberRating,
                         t1.Rating,
+                        t2.Id,
                         t2.TimeOut
                     })
                     .Where(x => x.Username.Equals(username))
@@ -239,6 +240,7 @@ namespace Mgm.User
                         IsRegisAdmin = x.IsRegisAdmin,
                         NumberRating = x.NumberRating,
                         Rating = x.Rating,
+                        TimeOutId = x.Id,
                         TimeOut = x.TimeOut
 
                     })
