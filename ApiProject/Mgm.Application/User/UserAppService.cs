@@ -478,11 +478,24 @@ namespace Mgm.User
             try
             {
                 return _testHealthRepository.GetAll()
+                    .Join(_usersRepository.GetAll(), t1 => t1.Username, t2 => t2.Username,
+                    (t1, t2) => new
+                    {
+                        t1.Username,
+                        t2.FullName,
+                        t1.IsFever,
+                        t1.IsCough,
+                        t1.IsDyspnoeic,
+                        t1.IsTired,
+                        t1.HealthStatus,
+                        t1.HealthUpdDate
+                    })
                     .Where(x => x.Username.Equals(username))
                     .ToList()
                     .Select(x => new TestHealthOutput()
                     {
                         Username = x.Username,
+                        FullName = x.FullName,
                         IsFever = x.IsFever,
                         IsCough = x.IsCough,
                         IsDyspnoeic = x.IsDyspnoeic,
