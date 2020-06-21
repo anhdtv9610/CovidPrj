@@ -251,6 +251,7 @@
     <Compile Include="MgmAppServiceBase.cs" />
     <Compile Include="PositionHistory\Dtos\CreatePHistoryInput.cs" />
     <Compile Include="PositionHistory\Dtos\FilterInput.cs" />
+    <Compile Include="PositionHistory\Dtos\PHistoryDetailFilterInput.cs" />
     <Compile Include="PositionHistory\Dtos\PHistoryDeteail.cs" />
     <Compile Include="PositionHistory\Dtos\PositionHistoryOutput.cs" />
     <Compile Include="PositionHistory\IPositionHistoryAppService.cs" />

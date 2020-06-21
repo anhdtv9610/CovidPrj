@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Mgm.Utility.Dtos;
 using Mgm.Covid19.PositionHistory;
+using Mgm.Covid19.PositionHistoryDetail;
 
 namespace Mgm.PositionHistory
 {
@@ -15,6 +16,9 @@ namespace Mgm.PositionHistory
 
         [HttpGet]
         PositionHistoryOutput GetPositionHistoryDetail(int id);
+
+        [HttpPost]
+        PageResultDto<PositionsHistoryDetail> GetPositionHistoryDetailList(PHistoryDetailFilterInput input);
 
         [HttpPost]
         Task<ResultDto> CreateMultiPositionHistoryDetail(CreatePHistoryInput input);

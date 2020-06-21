@@ -140,6 +140,52 @@ namespace Mgm.PositionHistory
                 throw new UserFriendlyException(500, ex.Message);
             }
         }
+        public PageResultDto<PositionsHistoryDetail> GetPositionHistoryDetailList(PHistoryDetailFilterInput input)
+        {
+            try
+            {
+                PageResultDto<PositionsHistoryDetail> objResult = new PageResultDto<PositionsHistoryDetail>();
+
+                var fromDate = DateTime.Parse(input.DateFrom);
+                var toDate = DateTime.Parse(input.DateTo);
+
+                objResult.items = _positionsHistoryDetailRepository.GetAll()
+                    .WhereIf(input.IsWarning != 2,
+                        obj => obj.IsWarning == input.IsWarning)
+                    .Select(x => new PositionsHistoryDetail()
+                    {
+                        TimeOutId = x.TimeOutId,
+                        Lng = x.Lng,
+                        Lat = x.Lat,
+                        Address = x.Address,
+                        IsWarning = x.IsWarning,
+                        VerifyDate = x.VerifyDate
+                    })
+                    .Where(x =>
+                        x.VerifyDate >= fromDate &&
+                        x.VerifyDate <= toDate &&
+                        x.TimeOutId == input.TimeOutId)
+                    .Skip((input.SkipCount - 1) * input.MaxResultCount)
+                    .Take(input.MaxResultCount)
+                    .ToList();
+
+                objResult.totalCount = _positionsHistoryDetailRepository.GetAll()
+                    .WhereIf(input.IsWarning != 2,
+                        obj => obj.IsWarning == input.IsWarning)
+                    .Where(x =>
+                        x.VerifyDate >= fromDate &&
+                        x.VerifyDate <= toDate &&
+                        x.TimeOutId == input.TimeOutId)
+                    .Count();
+
+                return objResult;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message);
+                throw new UserFriendlyException(500, ex.Message);
+            }
+        }
 
         public async Task<ResultDto> CreateMultiPositionHistoryDetail(CreatePHistoryInput input)
         {
