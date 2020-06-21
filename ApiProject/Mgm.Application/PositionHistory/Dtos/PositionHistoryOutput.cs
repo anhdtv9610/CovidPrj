@@ -10,6 +10,7 @@ namespace Mgm.PositionHistory.Dtos
         public string Username { get; set; }
         public string FullName { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int CountIsWarning { get; set; }
         public List<PHistoryDeteail> PHistoryDeteailList { get; set; }
     }
 }

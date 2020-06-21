@@ -322,7 +322,7 @@ namespace Mgm.RegisIsolation
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("UserNotFound"));
+                    throw new UserFriendlyException(400, L("ErrorFinishIsolation"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -353,7 +353,7 @@ namespace Mgm.RegisIsolation
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("UserNotFound"));
+                    throw new UserFriendlyException(400, L("ErrorApprovedIsolation"));
                 }
 
                 ResultDto result = new ResultDto();

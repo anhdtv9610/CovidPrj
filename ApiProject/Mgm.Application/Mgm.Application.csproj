@@ -271,13 +271,6 @@
     <Compile Include="RegisIsolation\Dtos\RegisIsolationOutput.cs" />
     <Compile Include="RegisIsolation\IRegisIsolationAppService.cs" />
     <Compile Include="RegisIsolation\RegisIsolationAppService.cs" />
-    <Compile Include="UserGroup\Dtos\UpdateUserGroupInput.cs" />
-    <Compile Include="UserGroup\Dtos\UserGroupOutput.cs" />
-    <Compile Include="UserGroup\Dtos\FilterInput.cs" />
-    <Compile Include="UserGroup\Dtos\CreateUserGroupInput.cs" />
-    <Compile Include="UserGroup\Dtos\RightInsertListOutput.cs" />
-    <Compile Include="UserGroup\IUserGroupAppService.cs" />
-    <Compile Include="UserGroup\UserGroupAppService.cs" />
     <Compile Include="User\Dtos\ApprovedInput.cs" />
     <Compile Include="User\Dtos\CreateUserInput.cs" />
     <Compile Include="User\Dtos\FilterInput.cs" />

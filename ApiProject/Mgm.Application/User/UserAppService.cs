@@ -460,7 +460,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("UserNotPound"));
+                    throw new UserFriendlyException(400, L("UserNotFound"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -521,7 +521,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("UserNotFound"));
+                    throw new UserFriendlyException(400, L("TestHealthNotFound"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -573,13 +573,13 @@ namespace Mgm.User
                     }
                     else
                     {
-                        throw new UserFriendlyException(400, L("UserHasRated!"));
+                        throw new UserFriendlyException(400, L("UserHasRated"));
                     }    
 
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("AdminNotFound!"));
+                    throw new UserFriendlyException(400, L("AdminNotFound"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -614,7 +614,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("Error!"));
+                    throw new UserFriendlyException(400, L("ErrorApprovedAdmin"));
                 }
 
                 ResultDto result = new ResultDto();
@@ -650,7 +650,7 @@ namespace Mgm.User
                 }
                 else
                 {
-                    throw new UserFriendlyException(400, L("Error!"));
+                    throw new UserFriendlyException(400, L("ErrorCancelledAdmin"));
                 }
 
                 ResultDto result = new ResultDto();

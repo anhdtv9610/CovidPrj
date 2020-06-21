@@ -1,15 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
-    <text name="InvalidPasswordFormat" value="Passwords must be at least 8 characters, contain a lowercase, uppercase, and number." />
-    <text name="UserExisted" value="User existed!" />
-    <text name="UserOrCMNDExisted" value="Username or CMND existed!" />
-    <text name="TheCMNDInputAlreadyExist" value="The column CMND already existed!" />
+	  
+	  
+    <text name="InvalidPasswordFormat" value="Mật khẩu phải có ít nhất 8 ký tự, chứa chữ thường, chữ hoa và số." />
+    <text name="UserExisted" value="Người dùng đã tồn tại!" />
+    <text name="UserOrCMNDExisted" value="Số điện thoại hoặc chứng minh nhân dân/căn cước công dân đã tồn tại trong hệ thống!" />
+    <text name="TheCMNDInputAlreadyExist" value="Chứng minh nhân dân/căn cước công dân đã tồn tại trong hệ thống!" />
+    <text name="TestHealthNotFound" value="Lỗi khai báo sức khỏe!" />
+    <text name="UserHasRated" value="người dùng đã đánh giá!" />
+    <text name="AdminNotFound" value="Không tìm thấy Admin!" />
+    <text name="ErrorApprovedAdmin" value="Lỗi duyệt Admin!" />
+    <text name="ErrorCancelledAdmin" value="Lỗi hủy Admin!" />
+    <text name="UserRegisterIsolated" value="Người dùng đã đăng ký cách ly!" />
+    <text name="ErrorFinishIsolation" value="Lỗi duyệt kết thúc cách ly!" />
+    <text name="ErrorApprovedIsolation" value="Lỗi duyệt cách ly!" />
+    <text name="PositionWarningExist" value="Vị trí cảnh báo đã tồn tại!" />
+    <text name="PositionNotFound" value="Không tìm thấy vị trí cảnh báo!" />
     
-    <text name="UserNotFound" value="User not found!" />
-    <text name="TwoPasswordsThatYouEnterIsInconsistent" value="Two passwords that you enter is inconsistent!" />
+    <text name="UserNotFound" value="Không tìm thấy người dùng!" />
+    <text name="TwoPasswordsThatYouEnterIsInconsistent" value="Mật khẩu không khớp!" />
     
-    <text name="TheUsernameOrPasswordInvalid" value="The username or password invalid!" />
+    <text name="TheUsernameOrPasswordInvalid" value="Số điện thoại hoặc mật khẩu không hợp lệ!" />
     <text name="TheTokenInvalid" value="The token invalid!" />
     <text name="YourAccountHasBeenTemporarilyLocked" value="Your account has been temporarily locked!" />
     
