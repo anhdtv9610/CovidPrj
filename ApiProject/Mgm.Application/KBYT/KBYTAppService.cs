@@ -78,12 +78,12 @@ namespace Mgm.KBYT
             }
         }
 
-        public KBYTCN GetKBYTDetail(string username)
+        public KBYTCN GetKBYTDetail(int id)
         {
             try
             {
                 return _kbytcnRepository.GetAll()
-                    .Where(x => x.Username.Equals(username))
+                    .Where(x => x.Id.Equals(id))
                     .ToList()
                     .Select(x => new KBYTCN()
                     {

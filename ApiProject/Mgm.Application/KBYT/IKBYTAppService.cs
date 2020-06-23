@@ -14,7 +14,7 @@ namespace Mgm.KBYT
         PageResultDto<KBYTCN> GetKBYTList(FilterInput input);
 
         [HttpGet]
-        KBYTCN GetKBYTDetail(string username);
+        KBYTCN GetKBYTDetail(int id);
 
         [HttpPost]
         Task<ResultDto> CreateKBYT(CreateKBYTInput input);
