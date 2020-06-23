@@ -38,6 +38,7 @@ namespace Mgm.KBYT
                         obj => obj.Username.Equals(input.Keyword))
                     .Select(x => new KBYTCN()
                     {
+                        Id = x.Id,
                         Username = x.Username,
                         ContactWithPatient = x.ContactWithPatient,
                         BackFromDiseaseArea = x.BackFromDiseaseArea,
