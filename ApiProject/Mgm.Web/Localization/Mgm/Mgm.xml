@@ -20,8 +20,10 @@
     
     <text name="UserNotFound" value="Không tìm thấy người dùng!" />
     <text name="TwoPasswordsThatYouEnterIsInconsistent" value="Mật khẩu không khớp!" />
-    
-    <text name="TheUsernameOrPasswordInvalid" value="Số điện thoại hoặc mật khẩu không hợp lệ!" />
+	<text name="PassOldinvalid" value="Mật khẩu cũ không đúng!" />
+	  
+
+	<text name="TheUsernameOrPasswordInvalid" value="Số điện thoại hoặc mật khẩu không hợp lệ!" />
     <text name="TheTokenInvalid" value="The token invalid!" />
     <text name="YourAccountHasBeenTemporarilyLocked" value="Your account has been temporarily locked!" />
     

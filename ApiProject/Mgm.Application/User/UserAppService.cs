@@ -423,7 +423,10 @@ namespace Mgm.User
                     {
                         user.Password = utils.MD5Hash(input.Password);
                     }
-                    
+                    else
+                    {
+                        throw new UserFriendlyException(400, L("PassOldinvalid"));
+                    }
                     user.UpdatedDate = DateTime.UtcNow;
 
                     await _usersRepository.UpdateAsync(user);

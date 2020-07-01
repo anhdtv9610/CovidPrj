@@ -40,6 +40,7 @@ namespace Mgm.KBYT
                     {
                         Id = x.Id,
                         Username = x.Username,
+
                         ContactWithPatient = x.ContactWithPatient,
                         BackFromDiseaseArea = x.BackFromDiseaseArea,
                         ContactWithPersonBack = x.ContactWithPersonBack,
