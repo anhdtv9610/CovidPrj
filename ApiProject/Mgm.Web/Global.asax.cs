@@ -27,8 +27,8 @@ namespace Mgm.Web
 
             //GlobalConfiguration.Configure(ApiConfig.Register);
 
-            breakAndLunchJob = new Thread(new ThreadStart(BreakAndLunchJob));
-            breakAndLunchJob.Start();
+            //breakAndLunchJob = new Thread(new ThreadStart(BreakAndLunchJob));
+            //breakAndLunchJob.Start();
 
             base.Application_Start(sender, e);
         }
