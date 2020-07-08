@@ -183,7 +183,7 @@ namespace Mgm.RegisIsolation
             }
         }
 
-        public RegisIsolationOutput GetRegisIsolationDetail(string username)
+        public RegisIsolationOutput GetRegisIsolationDetail(int id )
         {
             try
             {
@@ -191,6 +191,7 @@ namespace Mgm.RegisIsolation
                     .Join(_usersRepository.GetAll(), t1 => t1.Username, t2 => t2.Username,
                     (t1, t2) => new
                     {
+                        t1.Id,
                         t1.Username,
                         t2.FullName,
                         t1.ProvinceCode,
@@ -206,6 +207,7 @@ namespace Mgm.RegisIsolation
                     .Join(_districtRepository.GetAll(), t1 => t1.DistrictCode, t2 => t2.DistrictCode,
                     (t1, t2) => new
                     {
+                        t1.Id,
                         t1.Username,
                         t1.FullName,
                         t1.ProvinceCode,
@@ -222,6 +224,7 @@ namespace Mgm.RegisIsolation
                     .Join(_provinceRepository.GetAll(), t1 => t1.ProvinceCode, t2 => t2.ProvinceCode,
                     (t1, t2) => new
                     {
+                        t1.Id,
                         t1.Username,
                         t1.FullName,
                         t1.ProvinceCode,
@@ -236,10 +239,11 @@ namespace Mgm.RegisIsolation
                         t1.CancelIsolationStatus,
                         t1.CancelDate
                     })
-                    .Where(x => x.Username.Equals(username))
+                    .Where(x => x.Id == id)
                     .ToList()
                     .Select(x => new RegisIsolationOutput()
                     {
+                        Id = x.Id,
                         Username = x.Username,
                         FullName = x.FullName,
                         ProvinceCode = x.ProvinceCode,

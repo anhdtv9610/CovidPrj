@@ -14,7 +14,7 @@ namespace Mgm.RegisIsolation
         PageResultDto<RegisIsolationOutput> GetRegisIsolationsList(FilterInput input);
 
         [HttpGet]
-        RegisIsolationOutput GetRegisIsolationDetail(string username);
+        RegisIsolationOutput GetRegisIsolationDetail(int id);
 
         [HttpPost]
         Task<ResultDto> CreateRegisIsolation(CreateRegisIsolationInput input);
