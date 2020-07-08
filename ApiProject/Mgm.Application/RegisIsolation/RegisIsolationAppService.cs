@@ -313,7 +313,7 @@ namespace Mgm.RegisIsolation
             try
             {
                 var finish = await _regisIsolationsRepository.GetAll()
-                    .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.APPROVED)
+                    .Where(x => x.Id == input.Id && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.APPROVED)
                     //.OrderByDescending(x => x.Id)
                     .FirstOrDefaultAsync();
 
@@ -344,7 +344,7 @@ namespace Mgm.RegisIsolation
             try
             {
                 var approved = await _regisIsolationsRepository.GetAll()
-                    .Where(x => x.Username.Equals(input.Username) && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.WAIT)
+                    .Where(x => x.Id == input.Id && x.RegisIsolationStatus == Flag.Active && x.FinishIsolationStatus == Flag.InActive && x.CancelIsolationStatus == CancelIso.WAIT)
                     //.OrderByDescending(x => x.Id)
                     .FirstOrDefaultAsync();
 
