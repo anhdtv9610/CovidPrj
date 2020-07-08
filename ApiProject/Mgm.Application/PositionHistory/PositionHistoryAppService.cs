@@ -146,8 +146,11 @@ namespace Mgm.PositionHistory
             {
                 PageResultDto<PositionsHistoryDetail> objResult = new PageResultDto<PositionsHistoryDetail>();
 
-                var fromDate = DateTime.Parse(input.DateFrom);
-                var toDate = DateTime.Parse(input.DateTo);
+                var culture = CultureInfo.InvariantCulture;
+                var fromDate = DateTime.ParseExact(input.DateFrom, "MM/dd/yyyy HH:mm:ss", culture);
+                var toDate = DateTime.ParseExact(input.DateTo, "MM/dd/yyyy HH:mm:ss", culture);
+                //var fromDate = DateTime.Parse(input.DateFrom);
+                //var toDate = DateTime.Parse(input.DateTo);
 
                 objResult.items = _positionsHistoryDetailRepository.GetAll()
                     .WhereIf(input.IsWarning != 2,
